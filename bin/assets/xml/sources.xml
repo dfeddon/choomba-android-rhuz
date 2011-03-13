@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sources>
+	<xml>
+		<!--<file src="item_data.xml" id="itemData"/>
+		<file src="map_data.xml" id="mapData"/>
+		<file src="npc_data.xml" id="npcData"/>
+		<file src="player_data.xml" id="playerData"/>
+		<file src="ui_inventory_data.xml" id="uiInventoryData"/>-->
+	</xml>
+	<tmx>
+		<file src="scene1.tmx" id="scene1Map"/>
+		<file src="scene2.tmx" id="scene2Map"/>
+	</tmx>
+	<images>
+		<!--<file src="popupBG.gif" id="winBGImg"/>-->
+		<file src="s1_floor.jpg" id="s1FloorImg"/>
+		<file src="scene2bg.png" id="s2FloorImg"/>
+		<file src="playerMage.gif" id="playerMageImg"/>
+		<file src="scene1_1.gif" id="scene1_1Img"/>
+		<file src="scene2_1.png" id="scene2_1Img"/>
+		<!--<file src="scene1_4.gif" id="scene1_4Img"/> -->
+		<file src="invEquip.png" id="invEquipImg"/>
+		<file src="invItems.png" id="invItemsImg"/>
+		<file src="invMagic.png" id="invMagicImg"/>
+		<file src="invJournal.png" id="invJournalImg"/>
+	</images>
+	<tileAssets>
+	</tileAssets>
+	<tileProperties>
+		<file tileId="treeTile" />
+	</tileProperties>
+</sources>
