@@ -23,6 +23,13 @@
 		<file src="invItems.png" id="invItemsImg"/>
 		<file src="invMagic.png" id="invMagicImg"/>
 		<file src="invJournal.png" id="invJournalImg"/>
+		<!-- INVENTORY ITEMS -->
+		<file src="invPotionBlue.png" id="invPotionBlueImg"/>
+		<file src="invScroll1.png" id="invScroll1Img"/>
+		<file src="invGauntletBronze.png" id="invGauntletBronzeImg"/>
+		<file src="invHornBlasting.png" id="invHornBlastingImg"/>
+		<file src="invHerbs.png" id="invHerbsImg"/>
+		<file src="invArrow.png" id="invArrowImg"/>
 	</images>
 	<tileAssets>
 	</tileAssets>

@@ -129,7 +129,8 @@ package com.dfeddon.rhuz
 		override public function moveToPos(pTo:Point, s:int):void
 		{
 			// is player inactive
-			if (!active) return;
+			if (!active || !Studio.currentLot.active) 
+				return;
 			
 			// if moving, reset camera
 			if (moving)

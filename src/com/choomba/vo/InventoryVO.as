@@ -5,11 +5,11 @@ package com.choomba.vo
 	public class InventoryVO
 	{
 		private var _name:String;
-		private var _type:String;
+		private var _type:InventoryTypeVO;
 		private var _image:BitmapData;
 		private var _desc:String;
 
-		public function InventoryVO(name:String=null, type:String=null, image:BitmapData=null, desc:String=null)
+		public function InventoryVO(name:String=null, type:InventoryTypeVO=null, image:BitmapData=null, desc:String=null)
 		{
 			if (name) _name = name;
 			if (type) _type = type;
@@ -27,12 +27,12 @@ package com.choomba.vo
 			_name = value;
 		}
 
-		public function get type():String
+		public function get type():InventoryTypeVO
 		{
 			return _type;
 		}
 
-		public function set type(value:String):void
+		public function set type(value:InventoryTypeVO):void
 		{
 			_type = value;
 		}

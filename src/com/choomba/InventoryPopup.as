@@ -1,5 +1,6 @@
 package com.choomba
 {
+	import com.choomba.vo.InventoryActionVO;
 	import com.choomba.vo.InventoryVO;
 	
 	import flash.display.DisplayObject;
@@ -8,13 +9,19 @@ package com.choomba
 	import flash.geom.Point;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	
+	import mx.utils.StringUtil;
 
 	public class InventoryPopup extends AbstractPopup
 	{
 		private const WIN_ITEM_POINT:Point = new Point(50, 75);
+		private const WIN_ACTION_POINT:Point = new Point(340, 75);
 		
 		private var _cItem:InventoryVO;
+		private var _cAction:String;
 		private var txtDesc:TextField;
+		private var playerInv:Array = new Array();
+		private var viewActions:Sprite;
 		
 		public function InventoryPopup(xOffset:int=0, yOffset:int=0)
 		{
@@ -27,14 +34,14 @@ package com.choomba
 			var h2:TextField = new TextField();
 			var tf:TextFormat = new TextFormat();
 			tf.size = 24;
-			h1.text = 'Inventory Items';
-			h1.textColor = 0xffffff;
+			h1.text = 'Inventory';
+			h1.textColor = 0xffff99;
 			h1.x = 50;
 			h1.y = 30;
 			h1.width = 200;
 			h2.text = 'Actions';
-			h2.textColor = 0xffffff;
-			h2.x = 400;
+			h2.textColor = 0xffff99;
+			h2.x = 340;
 			h2.y = 30;
 			h1.setTextFormat(tf);
 			h2.setTextFormat(tf);
@@ -55,7 +62,7 @@ package com.choomba
 			txtDesc = new TextField();
 			var tdf:TextFormat = new TextFormat();
 			tdf.size = 24;
-			txtDesc.textColor = 0xffffff;
+			txtDesc.textColor = 0xffff99;
 			txtDesc.x = 50;
 			txtDesc.y = pt.y + itms.height + 10;
 			txtDesc.multiline = true;
@@ -67,6 +74,31 @@ package com.choomba
 			addChild(txtDesc);
 			// listeners
 			//addEventListener(MouseEvent.CLICK, clickHandler);
+			
+			// actions sprite
+			viewActions = new Sprite();
+			var ap:Point = WIN_ACTION_POINT;// new Point(50, 75);
+			viewActions.graphics.lineStyle(1, 0xffffff, 1);
+			viewActions.graphics.drawRoundRect(ap.x, ap.y, 200, 
+				Studio.DEFAULT_TILE_HEIGHT * 4, 15);
+			addChild(viewActions);
+			
+			// submit
+			//buildActions();//(itms, pt);
+			var sbt:TextField = new TextField();
+			var sbtf:TextFormat = new TextFormat();
+			sbtf.size = 18;
+			sbtf.align = 'center';
+			sbt.width = 200;
+			sbt.multiline = true;
+			sbt.selectable = false;
+			sbt.textColor = 0xffffff;
+			sbt.htmlText = '<b>YES, Submit<br>Thy Request</b>';
+			sbt.x = 555;
+			sbt.y = 150;
+			sbt.setTextFormat(sbtf);
+			sbt.addEventListener(MouseEvent.CLICK, submitClickHandler);
+			addChild(sbt);
 		}
 		
 		private function buildList(win:Sprite, pt:Point):void
@@ -79,9 +111,12 @@ package com.choomba
 			
 			for (var i:uint = 0; i < ar.length; i++)
 			{
-				var vo:InventoryVO = ar[i] as InventoryVO;				
+				var vo:InventoryVO = ar[i] as InventoryVO;
+				
+				playerInv.push(vo);
+				
 				img = new Image(vo.image);
-				img.x = pt.x + (Studio.DEFAULT_TILE_WIDTH * col);
+				img.x = pt.x + (Studio.DEFAULT_TILE_WIDTH * col + 10);
 				img.y = pt.y + (Studio.DEFAULT_TILE_HEIGHT * row);
 				
 				win.addChild(img);
@@ -98,29 +133,81 @@ package com.choomba
 			win.addEventListener(MouseEvent.CLICK, itemClickHandler);
 		}
 		
+		private function submitClickHandler(e:MouseEvent):void
+		{
+			e.stopImmediatePropagation();
+			
+			trace("SUBMIT", _cItem.name, _cAction);
+		}
+		
 		private function itemClickHandler(e:MouseEvent):void
 		{
 			e.stopImmediatePropagation();
 			
+			/*if (e.localX > 785 && e.localY < 15)
+				closePopup();*/
+			
+			//trace('::', e.localX, e.localY);
 			var r:int = Math.floor(e.localY / WIN_ITEM_POINT.y);
-			var c:int = Math.floor(e.localX / WIN_ITEM_POINT.x);
+			var c:int = Math.floor(e.localX / (WIN_ITEM_POINT.x+10));
 			var ci:int;
 			if (c > 1)
 				ci = r * 1 + ((c-1) * 4);
 			else ci = r * c;
-			trace('r', r, 'c', c, '=', ci);
+			//trace('r', r, 'c', c, '=', ci);
 			
 			cItem = Studio.player.inv[ci - 1];
 			trace('item clicked', ci);/*, Math.floor(e.localX / WIN_ITEM_POINT.x), 
 				Math.floor(e.localY / WIN_ITEM_POINT.y));*/
 		}
 		
-		private function clickHandler(e:MouseEvent):void
+		private function buildActions():void
 		{
-			//removeEventListener(MouseEvent.CLICK, clickHandler);
+			trace('actions');
+			
+			// clear extant actions
+			while (viewActions.numChildren) 
+				viewActions.removeChildAt(0);
+			
+			var txt:TextField;// = new TextField();
+			var dObj:DisplayObject;
+			
+			var count:int = 0;
+			for each(var i:InventoryActionVO in _cItem.type.actions)
+			{
+				trace('::', i.name);
+				txt = new TextField();
+				txt.addEventListener(MouseEvent.CLICK, actionClickHandler);
+				var tf:TextFormat = new TextFormat();
+				tf.size = 24;
+				
+				txt.text = i.name;
+				txt.selectable = false;
+				txt.mouseEnabled = true;
+				txt.textColor = 0xffffff;
+				txt.x = WIN_ACTION_POINT.x + 10;
+				txt.y = WIN_ACTION_POINT.y + 10 + (count * 44);
+				txt.width = 225;
+				txt.setTextFormat(tf);
+				
+				dObj = viewActions.addChild(txt);
+				count++;
+			}
+			//trace(_cItem.name);
+		}
+		
+		private function actionClickHandler(e:MouseEvent):void
+		{
+			var txt:TextField = e.currentTarget as TextField;
+			trace('action clicked', txt.text);
+			_cAction = txt.text.toLocaleLowerCase();
+		}
+		
+		override protected function closePopup():void
+		{
 			removeEventListener(MouseEvent.CLICK, itemClickHandler);
 			
-			closePopup();
+			super.closePopup();
 		}
 
 		public function get cItem():InventoryVO
@@ -136,7 +223,9 @@ package com.choomba
 			
 			// update description text
 			txtDesc.defaultTextFormat = txtDesc.getTextFormat();
-			txtDesc.text = value.desc;
+			txtDesc.text = value.name.toUpperCase() + ' : ' + value.desc;
+			
+			buildActions();
 		}
 
 	}

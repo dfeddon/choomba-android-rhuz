@@ -168,6 +168,8 @@ package com.choomba
 				
 				default: trace('error');
 			}
+			
+			//remove();
 		}
 		
 		override public function remove():void

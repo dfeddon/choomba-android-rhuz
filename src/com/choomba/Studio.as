@@ -142,6 +142,7 @@ package com.choomba
 			trace('tapped', e.localX, e.localY);
 			var point:Point = new Point(e.localX, e.localY);
 			
+			//if (currentLot.active)
 			tapAtPoint(point);
 		}
 		
@@ -186,6 +187,9 @@ package com.choomba
 		protected function touchEndHandler(e:TouchEvent):void
 		{
 			trace('touch end', e.touchPointID);
+			
+			if (!currentLot.active)
+				return;
 			
 			// if tap timer running, just a simple tap
 			if (tapTimer.running)
