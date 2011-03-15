@@ -109,9 +109,10 @@ package com.choomba
 			var row:int = 0;
 			var col:int = 0;
 			
-			for (var i:uint = 0; i < ar.length; i++)
+			for each(var vo:InventoryVO in ar)
+			//for (var i:uint = 0; i < ar.length; i++)
 			{
-				var vo:InventoryVO = ar[i] as InventoryVO;
+				//var vo:InventoryVO = ar[i] as InventoryVO;
 				
 				playerInv.push(vo);
 				

@@ -9,6 +9,7 @@ package com.choomba
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.text.TextField;
 	
 	import org.flintparticles.twoD.emitters.Emitter2D;
 	import org.flintparticles.twoD.renderers.BitmapRenderer;
@@ -26,6 +27,7 @@ package com.choomba
 		private var _active:Boolean;
 		
 		public var bg:Sprite;
+		public var fg:Sprite;
 		//protected var fog:DynamicLighting;
 		
 		public function Lot()
@@ -37,7 +39,8 @@ package com.choomba
 			
 			addEventListener(Event.ADDED_TO_STAGE, init);
 			
-			bg = addChildAt(new Sprite, 0) as Sprite;
+			//bg = addChildAt(new Sprite, 0) as Sprite;
+			//fg = addChild(new Sprite) as Sprite;
 		}
 		
 		protected function init(e:Event):void
@@ -47,12 +50,21 @@ package com.choomba
 			active = true;
 			
 			// set boundaries
-			graphics.beginFill(0x000000);
-			graphics.drawRect(0,0, 
+			//graphics.beginFill(0x000000);
+			graphics.drawRect(0,0,//stage.fullScreenWidth,stage.fullScreenHeight 
 				Studio.DEFAULT_TILE_WIDTH * Studio.DEFAULT_LOT_COLUMNS,
 				Studio.DEFAULT_TILE_HEIGHT * Studio.DEFAULT_LOT_ROWS
 			);
-			graphics.endFill();
+			//graphics.endFill();
+			
+			// set fg boundaries
+			//fg.graphics.beginFill(0xffffff);
+			//fg.graphics.lineStyle(3, 0xffff00, 1);
+			/*fg.graphics.drawRect(0,0,
+				Studio.DEFAULT_TILE_WIDTH * Studio.DEFAULT_LOT_COLUMNS,
+				Studio.DEFAULT_TILE_HEIGHT * Studio.DEFAULT_LOT_ROWS
+			);*/
+			//fg.graphics.endFill();
 
 			trace('stage', width, height);
 		}

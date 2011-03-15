@@ -82,16 +82,19 @@ package com.choomba
 		
 		protected function init(e:Event):void
 		{
-			trace('studio init', width, height);
+			//trace('studio init', width, height);
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			// define tap timer
 			tapTimer = new Timer(1000, 1);
 			tapTimer.addEventListener(TimerEvent.TIMER_COMPLETE, tapTimerCompleteHandler);
 			
-			graphics.beginFill(0x000000);
-			graphics.drawRect(0,0, stage.fullScreenWidth, stage.fullScreenHeight);
-			graphics.endFill();
+			//graphics.beginFill(0x000000);
+			graphics.drawRect(0,0, 
+				stage.fullScreenWidth,//Studio.DEFAULT_LOT_COLUMNS,
+				stage.fullScreenHeight//Studio.DEFAULT_LOT_ROWS
+			);
+			//graphics.endFill();
 			
 			// load assets
 			loadAssets();
@@ -148,6 +151,9 @@ package com.choomba
 		
 		protected function touchBeginHandler(e:TouchEvent):void
 		{
+			//removeEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
+			//removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			
 			tapTimer.start();
 			touchBegin = e;
 		}
@@ -188,8 +194,8 @@ package com.choomba
 		{
 			trace('touch end', e.touchPointID);
 			
-			if (!currentLot.active)
-				return;
+			/*if (!currentLot.active)
+				return;*/
 			
 			// if tap timer running, just a simple tap
 			if (tapTimer.running)
@@ -245,11 +251,11 @@ package com.choomba
 		{
 			trace('tap at point...');
 			
-			if (!Studio.currentLot.active)
+			/*if (!Studio.currentLot.active)
 			{
 				trace('lot inactive');
 				return;
-			}
+			}*/
 			
 			if (!player.active && player.pSplash)
 			{
@@ -310,7 +316,7 @@ package com.choomba
 		{
 			trace('tile complete');
 			
-			currentLot.addChild(tilemap);
+			/*currentLot.addChild(tilemap);
 			
 			// add items
 			
@@ -344,7 +350,7 @@ package com.choomba
 			// 3 sec delay (for mobile)
 			var timer:Timer = new Timer(3000, 1);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, playerStartPos);
-			timer.start();
+			timer.start();*/
 		}
 		
 		protected function playerStartPos(e:TimerEvent):void

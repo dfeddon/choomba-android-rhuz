@@ -29,6 +29,7 @@ package
 	import flash.geom.Rectangle;
 	import flash.profiler.showRedrawRegions;
 	import flash.system.System;
+	import flash.utils.Timer;
 	
 	import org.flintparticles.twoD.renderers.BitmapRenderer;
 	
@@ -58,6 +59,46 @@ package
 			addStage(incubus);
 			
 			level = new TileCode(currentLot.tileMapSource);
+			
+			currentLot.addChild(level);
+			
+			// add items
+			
+			
+			// add player to stage
+			var img:Image = new Image(AssetManager.getInstance()[currentLot.playerImage]);
+			var startX:int = currentLot.startTile[0] * Studio.DEFAULT_TILE_WIDTH;
+			var startY:int = currentLot.startTile[1] * Studio.DEFAULT_TILE_HEIGHT;
+			player = new Player(img, true, startX, startY);
+			addPlayer(player);
+			//trace('x', player.x, 'y', player.y);
+			//player.moveToPos(new Point(player.x, player.y), 20);
+			
+			// add fg
+			//currentLot.setChildIndex(currentLot.fg, currentLot.numChildren - 1);
+			
+			// add fog
+			if (currentLot.fogEnabled)
+			{
+				fog = currentLot.addChild(new Fog) as Fog;
+				fog.name = 'fog';
+				Studio.fog.update();
+			}
+			
+			cam = currentLot.addChild(new SteadyCam) as SteadyCam;
+			
+			
+			// debugger
+			var fps:fpsBox = new fpsBox(stage);
+			addChild(fps);
+			
+			//flash.profiler.showRedrawRegions(true, 0x0000ff);
+			
+			// 3 sec delay (for mobile)
+			var timer:Timer = new Timer(3000, 1);
+			timer.addEventListener(TimerEvent.TIMER_COMPLETE, playerStartPos);
+			timer.start();
+			
 		}
 		
 		override protected function playerStartPos(e:TimerEvent):void

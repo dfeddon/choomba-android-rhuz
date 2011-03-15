@@ -152,15 +152,18 @@ package com.choomba
 			offsetX = (stage.fullScreenWidth / 2) - pTo.x;
 			offsetY = (stage.fullScreenHeight / 2) - pTo.y;
 			
+			var lotW:int = Studio.DEFAULT_LOT_COLUMNS * Studio.DEFAULT_TILE_WIDTH;
+			var lotH:int = Studio.DEFAULT_LOT_ROWS * Studio.DEFAULT_TILE_HEIGHT;
+			
 			// stop at edges
 			if (offsetX > 0) 
 				offsetX = 0;  // west edge
-			else if (offsetX < -((Studio.currentLot.width)-(stage.fullScreenWidth)))
-				offsetX = -((Studio.currentLot.width)-(stage.fullScreenWidth)); // east edge
+			else if (offsetX < -((lotW)-(stage.fullScreenWidth)))
+				offsetX = -((lotW)-(stage.fullScreenWidth)); // east edge
 			if (offsetY > 0) 
 				offsetY = 0; // north edge
-			else if (offsetY < -((Studio.currentLot.height)-(stage.fullScreenHeight)))
-				offsetY = -((Studio.currentLot.height)-(stage.fullScreenHeight)); // south edge
+			else if (offsetY < -((lotH)-(stage.fullScreenHeight)))
+				offsetY = -((lotH)-(stage.fullScreenHeight)); // south edge
 			
 			p.x = Math.round(offsetX);	
 			p.y = Math.round(offsetY);

@@ -107,8 +107,8 @@ package com.choomba
 			
 			parent.removeChild(this);
 			
-			Studio.player.pSplash.remove();
-			//Studio.currentLot.active = true;
+			//Studio.player.pSplash.remove();
+			Studio.currentLot.active = true;
 		}
 	}
 }

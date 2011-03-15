@@ -53,11 +53,13 @@ package com.choomba
 		{
 			var returnVO:SheetMapVO;
 			
-			for (var i:uint = 0; i < mapArray.length; i++)
+			//for (var i:uint = 0; i < mapArray.length; i++)
+			for each(var vo:SheetMapVO in mapArray)
 			{
-				if (SheetMapVO(mapArray[i]).type == type)
+				//if (SheetMapVO(mapArray[i]).type == type)
+				if (vo.type == type)
 				{
-					returnVO = DataUtils.clone(mapArray[i]) as SheetMapVO;
+					returnVO = DataUtils.clone(vo) as SheetMapVO;
 					break;
 				}
 			}
