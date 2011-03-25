@@ -56,7 +56,7 @@ package
 			incubus.playerImage = 'playerMageImg';
 			incubus.startTile = [12,12];
 
-			addStage(incubus);
+			addStage(basement);
 			
 			level = new TileCode(currentLot.tileMapSource);
 			

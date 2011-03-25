@@ -10,6 +10,8 @@ package com.dfeddon.rhuz
 	import com.choomba.utils.GridUtils;
 	import com.choomba.vo.SheetMapVO;
 	import com.gskinner.motion.GTween;
+	import com.timo.astar.Astar;
+	import com.timo.astar.Node;
 	
 	import flash.display.BlendMode;
 	import flash.display.Sprite;
@@ -140,7 +142,10 @@ package com.dfeddon.rhuz
 			}
 			
 			// find path a*
-			var grid:Object = GridUtils.getMapNodeFromCoordinates(pTo);
+			var gridTo:Object = GridUtils.getMapNodeFromCoordinates(pTo);
+			var gridFrom:Object = GridUtils.getMapNodeFromCoordinates(new Point(this.x, this.y));
+			var a:Astar = new Astar(GridUtils.metaLayer['walls']);
+			//var node:Node = a.findPath(gridFrom, gridTo);
 			//GridUtils.buildMapWithCollidables();
 			trace('->', pTo);
 			var center:Point = GridUtils.getMapNodeFromCoordinates(pTo).tileCenter;
