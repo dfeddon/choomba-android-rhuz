@@ -47,6 +47,7 @@ package
 			basement.tileBG = 's1FloorImg';
 			basement.tileMapSource = 'scene1';
 			basement.playerImage = 'playerMageImg';
+			basement.lightingType = Fog.TYPE_FOG_OF_WAR;
 			basement.startTile = [1, 23];
 
 			var incubus:Lot = new Lot();
@@ -54,9 +55,18 @@ package
 			incubus.tileBG = 's2FloorImg';
 			incubus.tileMapSource = 'scene2';
 			incubus.playerImage = 'playerMageImg';
-			incubus.startTile = [12,12];
+			incubus.lightingType = Fog.TYPE_FOG_OF_WAR;
+			incubus.startTile = [12,13];
+			
+			var outside:Lot = new Lot();
+			outside.fogEnabled = true;
+			outside.tileBG = 's3FloorImg';
+			outside.tileMapSource = 'scene3';
+			outside.playerImage = 'playerMageImg';
+			outside.lightingType = Fog.TYPE_STATIC_LIGHT;
+			outside.startTile = [12, 12];
 
-			addStage(basement);
+			addStage(incubus);
 			
 			level = new TileCode(currentLot.tileMapSource);
 			

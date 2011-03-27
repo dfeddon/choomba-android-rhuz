@@ -30,7 +30,7 @@ package com.choomba
 	{
 		public static const TOUCH_BASED_MODE:Boolean = true;
 		
-		public static const DYNAMIC_LIGHTING_TYPE:String = Fog.TYPE_FOG_OF_WAR;
+		//public static const DYNAMIC_LIGHTING_TYPE:String = Fog.TYPE_FOG_OF_WAR;
 		
 		public static const DEFAULT_TILE_WIDTH:int = 64;
 		public static const DEFAULT_TILE_HEIGHT:int = 64;

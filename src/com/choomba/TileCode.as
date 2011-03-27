@@ -238,7 +238,7 @@ package com.choomba
 			
 			//display screen by adding screenBitmapData to screenBitmap 
 			// and add screenBitmap data to displaylist
-			var mapImg:Image = new Image(screenBitmapData, true, true);
+			var mapImg:Image = new Image(screenBitmapData);//, true, true);
 			
 			addChild(mapImg);
 			//addChild(tilemapContainer);

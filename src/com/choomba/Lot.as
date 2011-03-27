@@ -22,6 +22,8 @@ package com.choomba
 		public var playerImage:String;
 		public var startTile:Array;
 		
+		private var _lightingType:String;
+		
 		public static var _currentScene:Scene;
 		
 		private var _active:Boolean;
@@ -128,6 +130,16 @@ package com.choomba
 				// remove tint
 				//this.alpha = 1;
 			}
+		}
+
+		public function get lightingType():String
+		{
+			return _lightingType;
+		}
+
+		public function set lightingType(value:String):void
+		{
+			_lightingType = value;
 		}
 
 

@@ -122,7 +122,7 @@ package com.choomba
 			parent.transform.colorTransform = transform.colorTransform;
 			parent.blendMode = blendMode;
 			parent.filters = filters;
-			parent.alpha = this.alpha;
+			parent.alpha = alpha;
 			
 		}
 		
@@ -183,7 +183,7 @@ package com.choomba
 			speed = d / (player.speed * CAMERA_SPEED_MULTIPLE);
 
 			tween = new GTween(moveObj, speed, p);
-			tween.ease = Sine.easeInOut;
+			//tween.ease = Sine.easeInOut;
 			tween.onComplete = tweenCompleteHandler;
 			
 			active = true;

@@ -111,20 +111,10 @@ package com.choomba
 			matrix.tx = Math.round(p.x - (FOG_WINDOW / 2) - xOffset);//(DARKNESS_BLOCK_SIZE * ix));
 			matrix.ty = Math.round(p.y - (FOG_WINDOW / 2) - yOffset);//(DARKNESS_BLOCK_SIZE * iy));// + (FOG_WINDOW / 2));
 			
-			switch(Studio.DYNAMIC_LIGHTING_TYPE)
+			switch(Studio.currentLot.lightingType)
 			{
 				case TYPE_STATIC_LIGHT:
-					
 					c.bitmapData.fillRect(c.bitmapData.rect, 0xff000000);
-					
-					c.bitmapData.draw(fogMask, 
-						matrix,
-						null, 
-						BlendMode.ERASE
-					);
-					
-					break;
-					
 				case TYPE_FOG_OF_WAR:
 					//////////////////////////////////////////////////
 					// reveal current block
@@ -147,6 +137,10 @@ package com.choomba
 						eMatrix.tx = Math.round(diff - (FOG_WINDOW + xOffset));
 						
 						cE = getChildAt(ind + mult) as Bitmap;
+						//if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT)
+							//cE.bitmapData.fillRect(c.bitmapData.rect, 0xff000000);
+						if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT)
+							cE.bitmapData.fillRect(cE.bitmapData.rect, 0xff000000);
 						cE.bitmapData.draw(fogMask, eMatrix, null, BlendMode.ERASE);
 					}
 					else cE = null;
@@ -165,6 +159,8 @@ package com.choomba
 						wMatrix.tx = Math.round(diff-xOffset);
 						
 						cW = getChildAt(ind - mult) as Bitmap;
+						if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT)
+							cW.bitmapData.fillRect(cW.bitmapData.rect, 0xff000000);
 						cW.bitmapData.draw(fogMask, wMatrix, null, BlendMode.ERASE);
 					}
 					else cW = null;
@@ -183,6 +179,8 @@ package com.choomba
 						sMatrix.ty = Math.round(diff - (FOG_WINDOW));
 						
 						cS = getChildAt(ind + 1) as Bitmap;
+						if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT)
+							cS.bitmapData.fillRect(cS.bitmapData.rect, 0xff000000);
 						cS.bitmapData.draw(fogMask, sMatrix, null, BlendMode.ERASE);
 						
 						// if east or west blocks exposed, include these
@@ -191,6 +189,8 @@ package com.choomba
 							alt = getChildAt(ind + 1 + mult) as Bitmap;
 							aMatrix = sMatrix.clone();
 							aMatrix.tx = eMatrix.tx;
+							if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT)
+								alt.bitmapData.fillRect(alt.bitmapData.rect, 0xff000000);
 							alt.bitmapData.draw(fogMask, aMatrix, null, BlendMode.ERASE);
 						}
 						else if (cW)
@@ -198,6 +198,8 @@ package com.choomba
 							alt = getChildAt(ind + 1 - mult) as Bitmap;
 							aMatrix = sMatrix.clone();
 							aMatrix.tx = wMatrix.tx;
+							if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT)
+								alt.bitmapData.fillRect(alt.bitmapData.rect, 0xff000000);
 							alt.bitmapData.draw(fogMask, aMatrix, null, BlendMode.ERASE);
 						}
 					}
@@ -206,39 +208,47 @@ package com.choomba
 					//////////////////////////////////////////////////
 					// reveal block north
 					//////////////////////////////////////////////////
-					//trace(':', p.y + FOG_WINDOW / 2, yOffset, c.height);
 					
-					/*if ( (p.y + (FOG_WINDOW / 2) - yOffset) > c.height )
+					if ( (p.y - (FOG_WINDOW / 2) - yOffset) < 0 )
 					{
-						diff = Math.round(p.y + (FOG_WINDOW / 2) - yOffset) - DARKNESS_BLOCK_SIZE; 
+						//diff = 0;//Math.round(p.y - (FOG_WINDOW / 2) + yOffset) + DARKNESS_BLOCK_SIZE;
+						diff = Math.round(p.y - (FOG_WINDOW / 2) - yOffset);// + FOG_WINDOW;//c.height);
 						
 						// check if last block
-						if (ind + 1 > numChildren) break;
+						if (ind - 1 < 0) break;
 						
-						sMatrix = matrix.clone();
-						sMatrix.ty = Math.round(diff - (FOG_WINDOW));
+						nMatrix = matrix.clone();
+						nMatrix.ty = Math.round(diff + DARKNESS_BLOCK_SIZE);//DARKNESS_BLOCK_SIZE - (diff-(FOG_WINDOW/2)));//diff - (FOG_WINDOW / 4));// + FOG_WINDOW);//(FOG_WINDOW/2));
 						
-						cS = getChildAt(ind + 1) as Bitmap;
-						cS.bitmapData.draw(fogMask, sMatrix, null, BlendMode.ERASE);
+						cN = getChildAt(ind - 1) as Bitmap;
+						if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT)
+							cN.bitmapData.fillRect(cN.bitmapData.rect, 0xff000000);
+						cN.bitmapData.draw(fogMask, nMatrix, null, BlendMode.ERASE);
 						
 						// if east or west blocks exposed, include these
 						if (cE)
 						{
-							alt = getChildAt(ind + 1 + mult) as Bitmap;
-							aMatrix = sMatrix.clone();
+							alt = getChildAt(ind - 1 + mult) as Bitmap;
+							aMatrix = nMatrix.clone();
 							aMatrix.tx = eMatrix.tx;
+							if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT)
+								alt.bitmapData.fillRect(alt.bitmapData.rect, 0xff000000);
 							alt.bitmapData.draw(fogMask, aMatrix, null, BlendMode.ERASE);
 						}
 						else if (cW)
 						{
-							alt = getChildAt(ind + 1 - mult) as Bitmap;
-							aMatrix = sMatrix.clone();
+							alt = getChildAt(ind - 1 - mult) as Bitmap;
+							aMatrix = nMatrix.clone();
 							aMatrix.tx = wMatrix.tx;
+							if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT)
+								alt.bitmapData.fillRect(alt.bitmapData.rect, 0xff000000);
 							alt.bitmapData.draw(fogMask, aMatrix, null, BlendMode.ERASE);
 						}
 					}
-					else cS = null;*/
+					else cN = null;
 					
+					//if (Studio.currentLot.lightingType == Fog.TYPE_STATIC_LIGHT && cE)
+						//cE.bitmapData.fillRect(c.bitmapData.rect, 0xff000000);
 					break;
 			}
 			
