@@ -6,6 +6,7 @@ package com.choomba
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Matrix;
 	
 	public class TileBackground extends Image
 	{
@@ -16,6 +17,9 @@ package com.choomba
 		public function TileBackground(img:BitmapData=null, tileVert:Boolean=true, tileHoriz:Boolean=true)
 		{
 			super();
+			
+			this.cacheAsBitmap = true;
+			this.cacheAsBitmapMatrix = new Matrix();
 			
 			bmd = img;
 			repeatH = tileHoriz;

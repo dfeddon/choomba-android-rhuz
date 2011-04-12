@@ -49,7 +49,7 @@ package com.choomba
 			//moveObj.y = Studio.player.y;
 			moveObj.visible = false;
 */			
-			visible=false;
+			visible = false;
 			
 			addEventListener(Event.ADDED, added);
 			addEventListener(Event.REMOVED, removed);
@@ -135,7 +135,7 @@ package com.choomba
 
 		public function moveToPos(pTo:Point, s:int):void
 		{
-			trace("=======");
+			//trace("=======");
 			var player:Player = Studio.player;
 			
 			var offsetX:Number;
@@ -193,7 +193,7 @@ package com.choomba
 		
 		protected function tweenCompleteHandler(e:GTween=null):void
 		{
-			trace('cam tween complete', e);
+			//trace('cam tween complete', e);
 			//trace(this.x, this.y);
 			removeEventListener(Event.ENTER_FRAME, update);
 			tween.onComplete = null;

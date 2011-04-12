@@ -4,6 +4,7 @@ package com.choomba
 	import com.choomba.vo.InventoryVO;
 	
 	import flash.display.DisplayObject;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -22,6 +23,10 @@ package com.choomba
 		private var txtDesc:TextField;
 		private var playerInv:Array = new Array();
 		private var viewActions:Sprite;
+		
+		private var iwin:Sprite;
+		//private var isel:Shape;
+		//private var atf:TextFormat;
 		
 		public function InventoryPopup(xOffset:int=0, yOffset:int=0)
 		{
@@ -54,7 +59,9 @@ package com.choomba
 			itms.graphics.lineStyle(1, 0xffffff, 1);
 			itms.graphics.drawRoundRect(pt.x, pt.y, Studio.DEFAULT_TILE_WIDTH * 4, 
 				Studio.DEFAULT_TILE_HEIGHT * 4, 15);
+			
 			addChild(itms);
+			
 			// item grid
 			buildList(itms, pt);
 			
@@ -103,8 +110,12 @@ package com.choomba
 		
 		private function buildList(win:Sprite, pt:Point):void
 		{
+			iwin = win;
+			
 			var ar:Array = Studio.player.inv;
 			
+			var spr:Sprite;
+			//var shp:Shape;
 			var img:Image;
 			var row:int = 0;
 			var col:int = 0;
@@ -116,11 +127,14 @@ package com.choomba
 				
 				playerInv.push(vo);
 				
-				img = new Image(vo.image);
-				img.x = pt.x + (Studio.DEFAULT_TILE_WIDTH * col + 10);
-				img.y = pt.y + (Studio.DEFAULT_TILE_HEIGHT * row);
+				spr = new Sprite();
 				
-				win.addChild(img);
+				img = new Image(vo.image);
+				spr.addChild(img);
+				spr.x = pt.x + (Studio.DEFAULT_TILE_WIDTH * col + 10);
+				spr.y = pt.y + (Studio.DEFAULT_TILE_HEIGHT * row);
+				
+				win.addChild(spr);
 				
 				row++;
 				
@@ -149,15 +163,42 @@ package com.choomba
 				closePopup();*/
 			
 			//trace('::', e.localX, e.localY);
-			var r:int = Math.floor(e.localY / WIN_ITEM_POINT.y);
-			var c:int = Math.floor(e.localX / (WIN_ITEM_POINT.x+10));
+			var r:int = Math.floor((e.localY + e.target.y) / WIN_ITEM_POINT.y);
+			var c:int = Math.floor((e.localX + e.target.x) / (WIN_ITEM_POINT.x+10));
 			var ci:int;
 			if (c > 1)
 				ci = r * 1 + ((c-1) * 4);
 			else ci = r * c;
 			//trace('r', r, 'c', c, '=', ci);
 			
+			var s:Sprite;
+			for (var i:uint = 0; i < iwin.numChildren; i++)
+			{
+				s = iwin.getChildAt(i) as Sprite;
+				
+				s.graphics.lineStyle(2, 0x000000, 1);
+				s.graphics.moveTo(5,5);
+				s.graphics.lineTo(15, 5);
+				s.graphics.moveTo(5,5);
+				s.graphics.lineTo(5, 15);
+				s.graphics.moveTo(55, 60);
+				s.graphics.lineTo(45, 60);
+				s.graphics.moveTo(55, 60);
+				s.graphics.lineTo(55, 50);
+			}
+			
 			cItem = Studio.player.inv[ci - 1];
+			var spr:Sprite = e.target as Sprite;
+			spr.graphics.lineStyle(2, 0x00ff00, 1);
+			spr.graphics.moveTo(5,5);
+			spr.graphics.lineTo(15, 5);
+			spr.graphics.moveTo(5,5);
+			spr.graphics.lineTo(5, 15);
+			spr.graphics.moveTo(55, 60);
+			spr.graphics.lineTo(45, 60);
+			spr.graphics.moveTo(55, 60);
+			spr.graphics.lineTo(55, 50);
+			
 			trace('item clicked', ci);/*, Math.floor(e.localX / WIN_ITEM_POINT.x), 
 				Math.floor(e.localY / WIN_ITEM_POINT.y));*/
 		}
@@ -179,8 +220,8 @@ package com.choomba
 				trace('::', i.name);
 				txt = new TextField();
 				txt.addEventListener(MouseEvent.CLICK, actionClickHandler);
-				var tf:TextFormat = new TextFormat();
-				tf.size = 24;
+				var atf:TextFormat = new TextFormat();
+				atf.size = 24;
 				
 				txt.text = i.name;
 				txt.selectable = false;
@@ -189,7 +230,7 @@ package com.choomba
 				txt.x = WIN_ACTION_POINT.x + 10;
 				txt.y = WIN_ACTION_POINT.y + 10 + (count * 44);
 				txt.width = 225;
-				txt.setTextFormat(tf);
+				txt.setTextFormat(atf);
 				
 				dObj = viewActions.addChild(txt);
 				count++;
@@ -202,6 +243,17 @@ package com.choomba
 			var txt:TextField = e.currentTarget as TextField;
 			trace('action clicked', txt.text);
 			_cAction = txt.text.toLocaleLowerCase();
+			
+			// clear styles
+			for (var i:uint = 0; i < viewActions.numChildren; i++)
+			{
+				TextField(viewActions.getChildAt(i)).textColor = 0xffffff;
+			}
+			
+			// add highlight style
+			var tf:TextFormat = new TextFormat();
+			tf.color = 0x00ff00;
+			txt.setTextFormat(tf);
 		}
 		
 		override protected function closePopup():void

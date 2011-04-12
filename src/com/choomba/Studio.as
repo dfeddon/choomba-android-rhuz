@@ -2,6 +2,7 @@ package com.choomba
 {
 	import com.choomba.Lot;
 	import com.choomba.components.TextBubble;
+	import com.choomba.prose.ProseWin;
 	import com.choomba.utils.GridUtils;
 	import com.choomba.vo.TilesetPropertyVO;
 	import com.dfeddon.rhuz.Player;
@@ -74,8 +75,9 @@ package com.choomba
 			addEventListener(TouchEvent.TOUCH_BEGIN, touchBeginHandler);
 			addEventListener(TouchEvent.TOUCH_END, touchEndHandler);
 			
-			addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
-			addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			//addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
+			//addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+			
 			//addEventListener(MouseEvent.CLICK, clickHandler);
 			//addEventListener(MouseEvent.DOUBLE_CLICK, doubleClickHandler);
 		}
@@ -212,7 +214,7 @@ package com.choomba
 			tapTimer.reset()
 		}
 		
-		protected function mouseDownHandler(e:MouseEvent):void
+		/*protected function mouseDownHandler(e:MouseEvent):void
 		{
 			var touchBegin:TouchEvent = new TouchEvent(TouchEvent.TOUCH_BEGIN);
 			
@@ -230,7 +232,7 @@ package com.choomba
 			touchEnd.localY = e.localY;
 			
 			touchEndHandler(touchEnd);
-		}
+		}*/
 		
 		/*protected function doubleClickHandler(e:MouseEvent):void
 		{
@@ -358,6 +360,13 @@ package com.choomba
 			e.currentTarget.removeEventListener(TimerEvent.TIMER_COMPLETE, playerStartPos);
 			
 			player.moveToPos(new Point(player.x, player.y), 20);
+		}
+		
+		public function addProse(txt:String):void			
+		{
+			var pw:ProseWin = new ProseWin();
+			addChild(pw);
+			pw.addProse(txt);
 		}
 
 		public static function get studio():Studio

@@ -20,9 +20,9 @@ package com.choomba
 		public static const TYPE_FOG_OF_WAR:String = 'typeFogOfWar';
 		public static const TYPE_STATIC_LIGHT:String = 'typeStaticLight';
 		public static const TYPE_STATIC_LIGHT_RECT:String = 'typeStaticLightRect';
-		private static const DARKNESS_BLOCK_SIZE:int = 384;
+		private static const DARKNESS_BLOCK_SIZE:int = 192;//384;
 		
-		public static const FOG_WINDOW:int = 250;
+		public static const FOG_WINDOW:int = 190;//250;
 		private static var fogMask:Bitmap;
 		
 		private var matrix:Matrix;// = new Matrix();
@@ -43,6 +43,8 @@ package com.choomba
 		{
 			// disable mouse event handling
 			mouseEnabled = false;
+			
+			if (!Studio.currentLot.lightingType) return;
 			
 			var dark:Bitmap;
 			var maxW:int = Math.floor(Studio.currentLot.width / DARKNESS_BLOCK_SIZE);

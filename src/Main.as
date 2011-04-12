@@ -35,6 +35,8 @@ package
 	
 	public class Main extends Studio
 	{
+		private var timer:Timer;
+		
 		public function Main()
 		{
 			super();
@@ -47,6 +49,7 @@ package
 			basement.tileBG = 's1FloorImg';
 			basement.tileMapSource = 'scene1';
 			basement.playerImage = 'playerMageImg';
+			//basement.fogEnabled = false;
 			basement.lightingType = Fog.TYPE_FOG_OF_WAR;
 			basement.startTile = [1, 23];
 
@@ -66,7 +69,7 @@ package
 			outside.lightingType = Fog.TYPE_STATIC_LIGHT;
 			outside.startTile = [12, 12];
 
-			addStage(incubus);
+			addStage(basement);
 			
 			level = new TileCode(currentLot.tileMapSource);
 			
@@ -105,7 +108,7 @@ package
 			//flash.profiler.showRedrawRegions(true, 0x0000ff);
 			
 			// 3 sec delay (for mobile)
-			var timer:Timer = new Timer(3000, 1);
+			timer = new Timer(3000, 1);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, playerStartPos);
 			timer.start();
 			
@@ -114,6 +117,8 @@ package
 		override protected function playerStartPos(e:TimerEvent):void
 		{
 			super.playerStartPos(e);
+			
+			timer.removeEventListener(TimerEvent.TIMER_COMPLETE, playerStartPos);
 			
 			// add start items
 			Studio.player.inv.push(new InventoryVO('Potion of Healing', new InventoryTypeVO(InventoryTypeVO.INVENTORY_TYPE_POTION), 
@@ -156,8 +161,18 @@ package
 			//renderer.addEmitter( smoke );
 			renderer.addEmitter( fire );
 			fire.start();
-			var fow:DisplayObject = currentLot.getChildByName('fog');
-			var obj:DisplayObject = currentLot.addChildAt(renderer, currentLot.getChildIndex(fow) - 1);
+			
+			if (Studio.currentLot.fogEnabled)
+			{
+				var fow:DisplayObject = currentLot.getChildByName('fog');
+				var obj:DisplayObject = currentLot.addChildAt(renderer, currentLot.getChildIndex(fow) - 1);
+			}
+			
+			var today:Date = new Date();
+			var txt:String = '<b>' + today + '</b>';
+			txt += '<br><br>Lorem ipsum dolor sit amet, <i>consectetur adipiscing elit</i>. Curabitur rutrum adipiscing malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec elementum aliquam orci, eget hendrerit tortor euismod non. Nam arcu nibh, mattis fermentum scelerisque et, suscipit vel purus. Phasellus arcu nibh, luctus quis ultricies ut, porta eu elit. In hac habitasse platea dictumst.';
+			txt += '<br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur rutrum adipiscing malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec elementum aliquam orci, eget hendrerit tortor euismod non. Nam arcu nibh, mattis fermentum scelerisque et, suscipit vel purus. Phasellus arcu nibh, luctus quis ultricies ut, porta eu elit. In hac habitasse platea dictumst.';
+			addProse(txt);
 			//obj.x = 12 * 64;
 			//obj.y = 12 * 64;
 		}
