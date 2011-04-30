@@ -2,6 +2,7 @@ package com.choomba
 {
 	import com.choomba.vo.InventoryActionVO;
 	import com.choomba.vo.InventoryVO;
+	import com.dfeddon.rhuz.Player;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
@@ -153,6 +154,36 @@ package com.choomba
 			e.stopImmediatePropagation();
 			
 			trace("SUBMIT", _cItem.name, _cAction);
+			
+			switch(_cAction)
+			{
+				case InventoryActionVO.INVENTORY_ACTION_DROP:
+					
+					trace('dropping', _cItem.item.name);
+					
+					var p:Player = Studio.player;
+					
+					// add item to lot
+					var dobj:DisplayObject = Studio.currentLot.addChildAt(_cItem.item, 
+						Studio.currentLot.getChildIndex(p) - 1);
+					dobj.x = p.x;
+					dobj.y = p.y;
+					
+					// remove from player inv
+					for (var i:uint = 0; i < p.inv.length; i++)
+					{
+						if (p.inv[i].item == _cItem.item)
+						{
+							p.inv.splice(i, 1);
+							break;
+						}
+					}
+					
+					// close
+					closePopup();
+					
+					break;
+			}
 		}
 		
 		private function itemClickHandler(e:MouseEvent):void
@@ -259,6 +290,8 @@ package com.choomba
 		override protected function closePopup():void
 		{
 			removeEventListener(MouseEvent.CLICK, itemClickHandler);
+			
+			Studio.player.pSplash.remove();
 			
 			super.closePopup();
 		}

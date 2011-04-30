@@ -20,6 +20,7 @@
   <tile id="16">
    <properties>
     <property name="description" value="This is a mureen!"/>
+    <property name="takeable" value="true"/>
    </properties>
   </tile>
   <tile id="17">
@@ -29,21 +30,25 @@
   </tile>
   <tile id="21">
    <properties>
+    <property name="collidable" value="true"/>
     <property name="description" value="This is a pantry!"/>
    </properties>
   </tile>
   <tile id="22">
    <properties>
+    <property name="collidable" value="true"/>
     <property name="description" value="This is a pantry..."/>
    </properties>
   </tile>
   <tile id="23">
    <properties>
+    <property name="collidable" value="true"/>
     <property name="description" value="This is right pantry..."/>
    </properties>
   </tile>
   <tile id="24">
    <properties>
+    <property name="collidable" value="true"/>
     <property name="description" value="This is right pantry"/>
    </properties>
   </tile>

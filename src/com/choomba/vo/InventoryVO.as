@@ -1,5 +1,7 @@
 package com.choomba.vo
 {
+	import com.choomba.Item;
+	
 	import flash.display.BitmapData;
 
 	public class InventoryVO
@@ -8,13 +10,16 @@ package com.choomba.vo
 		private var _type:InventoryTypeVO;
 		private var _image:BitmapData;
 		private var _desc:String;
+		private var _item:Item;
 
-		public function InventoryVO(name:String=null, type:InventoryTypeVO=null, image:BitmapData=null, desc:String=null)
+		public function InventoryVO(name:String=null, type:InventoryTypeVO=null, 
+									image:BitmapData=null, desc:String=null, item:Item=null)
 		{
 			if (name) _name = name;
 			if (type) _type = type;
 			if (image) _image = image;
 			if (desc) _desc = desc;
+			if (item) _item = item;
 		}
 
 		public function get name():String
@@ -55,6 +60,16 @@ package com.choomba.vo
 		public function set desc(value:String):void
 		{
 			_desc = value;
+		}
+
+		public function get item():Item
+		{
+			return _item;
+		}
+
+		public function set item(value:Item):void
+		{
+			_item = value;
 		}
 
 

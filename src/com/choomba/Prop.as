@@ -27,8 +27,8 @@ package com.choomba
 		protected function setImage():void
 		{
 			// center image
-			image.x -= image.width / 2;
-			image.y -= image.height / 2;
+			_image.x -= _image.width / 2;
+			_image.y -= _image.height / 2;
 			
 			// add to stage
 			addChild(image);
@@ -42,6 +42,8 @@ package com.choomba
 		public function set image(value:Image):void
 		{
 			_image = value;
+			
+			setImage();
 		}
 
 	}

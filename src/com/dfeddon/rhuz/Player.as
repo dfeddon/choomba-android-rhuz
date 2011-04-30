@@ -2,13 +2,16 @@ package com.dfeddon.rhuz
 {
 	import com.choomba.Actor;
 	import com.choomba.Image;
+	import com.choomba.Item;
 	import com.choomba.PlayerSplash;
 	import com.choomba.Splash;
 	import com.choomba.SteadyCam;
 	import com.choomba.Studio;
 	import com.choomba.TileRect;
 	import com.choomba.utils.GridUtils;
+	import com.choomba.vo.ItemVO;
 	import com.choomba.vo.SheetMapVO;
+	import com.choomba.vo.TilesetPropertyVO;
 	import com.gskinner.motion.GTween;
 	import com.timo.astar.Astar;
 	import com.timo.astar.Node;
@@ -17,6 +20,7 @@ package com.dfeddon.rhuz
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.events.TouchEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -63,13 +67,11 @@ package com.dfeddon.rhuz
 			//blendMode = BlendMode.SCREEN;
 			
 			addEventListener(MouseEvent.CLICK, clickHandler);
+			addEventListener(TouchEvent.TOUCH_END, touchEndHandler);
 		}
 		
-		protected function clickHandler(e:MouseEvent):void
+		protected function touchEndHandler(e:TouchEvent):void
 		{
-			trace('player clicked');
-			//speed=150;
-			// stop event from bubbling, handle here
 			e.stopImmediatePropagation();
 			
 			// do nothing if moving
@@ -81,6 +83,12 @@ package com.dfeddon.rhuz
 			
 			// inventory
 			pSplash = Studio.currentLot.addChild(new PlayerSplash) as PlayerSplash;
+		}
+		
+		protected function clickHandler(e:MouseEvent):void
+		{
+			// stop event from bubbling, handle here
+			e.stopImmediatePropagation();
 		}
 		
 		override public function update():void
@@ -179,7 +187,9 @@ package com.dfeddon.rhuz
 		{
 			super.tweenCompleteHandler(e);
 			
-			sheet.stop();
+			frame = 0; // reset
+			
+			/*sheet.stop();
 			frame = 0; // reset
 			
 			switch(sheet.type)
@@ -188,11 +198,41 @@ package com.dfeddon.rhuz
 				case 'walkWest': sheet.play('standWest'); break;
 				case 'walkNorth': sheet.play('standNorth'); break;
 				case 'walkSouth': sheet.play('standSouth'); break;
-			}
+			}*/
 			
 			if (Studio.currentLot.fogEnabled)
 				Studio.fog.update();
 			
+			var o:Object = GridUtils.getMapNodeFromCoordinates(new Point(this.x, this.y));
+			GridUtils.printObject(o);
+			//GridUtils.printObject(o.properties);
+			
+			/*for each (var prop:TilesetPropertyVO in o.properties)
+			{
+				trace(prop.name, '->', prop.value);
+				
+				if (prop.name == TilesetPropertyVO.TAKEABLE)
+					trace("TAKEABLE", prop.value);
+			}*/
+			
+			for each(var item:Item in Studio.currentLot.items)
+			{
+				trace('----->', item.vo.loc, item.vo.pos);
+				if (this.hitTestObject(item))
+				{
+					trace("HIT ITEM!");
+					if (item.vo.takeable)
+					{
+						// remove from lot
+						Studio.currentLot.removeChildAt(
+							Studio.currentLot.getChildIndex(item));
+						
+						// add to inventory
+						item.itemToInv();
+					}
+				}
+			}
+
 		}
 
 		public function get inv():Array

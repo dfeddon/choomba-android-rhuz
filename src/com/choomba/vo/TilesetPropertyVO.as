@@ -2,11 +2,23 @@ package com.choomba.vo
 {
 	public class TilesetPropertyVO
 	{
+		public static const TAKEABLE:String = 'takeable';
+		
 		private var _name:String;
-		private var _value:String;
+		private var _value:*;
 		
 		public function TilesetPropertyVO()
 		{
+		}
+		
+		private function strToBool(str:String):Boolean
+		{
+			var bool:Boolean = false;
+			
+			if (str.toLowerCase() == 'true')
+				bool = true;
+			
+			return bool;
 		}
 
 		public function get name():String
@@ -19,9 +31,17 @@ package com.choomba.vo
 			_name = value;
 		}
 
-		public function get value():String
+		public function get value():*
 		{
+			switch(_name)
+			{
+				case TAKEABLE:
+					_value = strToBool(_value);
+					break;
+			}
+			
 			return _value;
+			
 		}
 
 		public function set value(value:String):void

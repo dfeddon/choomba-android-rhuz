@@ -58,9 +58,11 @@
 			var cols:int = a[0].length;
 			var temp:Array2 = new Array2(cols, rows);
 			
-			for (var yp:int = a.length - 1 ; yp >= 0; --yp) {
+			for (var yp:int = a.length - 1 ; yp >= 0; --yp) 
+			{
 				var col:Array = a[yp] as Array;
-				for (var xp:int = col.length - 1 ; xp >= 0; --xp) {
+				for (var xp:int = col.length - 1 ; xp >= 0; --xp) 
+				{
 					temp.set(xp, yp, col[xp]);
 				}
 			}

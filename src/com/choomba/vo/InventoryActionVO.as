@@ -2,15 +2,15 @@ package com.choomba.vo
 {
 	public class InventoryActionVO
 	{
-		public static const INVENTORY_ACTION_DROP:String = 'invActionDrop';
-		public static const INVENTORY_ACTION_DRINK:String = 'invActionDrink';
-		public static const INVENTORY_ACTION_POUR:String = 'invActionPour';
-		public static const INVENTORY_ACTION_WEAR:String = 'invActionWear';
-		public static const INVENTORY_ACTION_REMOVE:String = 'invActionRemove';
-		public static const INVENTORY_ACTION_ATTACK:String = 'invActionAttack';
-		public static const INVENTORY_ACTION_READ:String = 'invActionRead';
-		public static const INVENTORY_ACTION_BLOW:String = 'invActionBlow';
-		public static const INVENTORY_ACTION_EAT:String = 'invActionEat';
+		public static const INVENTORY_ACTION_DROP:String = 'drop';
+		public static const INVENTORY_ACTION_DRINK:String = 'drink';
+		public static const INVENTORY_ACTION_POUR:String = 'pour';
+		public static const INVENTORY_ACTION_WEAR:String = 'wear';
+		public static const INVENTORY_ACTION_REMOVE:String = 'remove';
+		public static const INVENTORY_ACTION_ATTACK:String = 'attack';
+		public static const INVENTORY_ACTION_READ:String = 'read';
+		public static const INVENTORY_ACTION_BLOW:String = 'blow';
+		public static const INVENTORY_ACTION_EAT:String = 'eat';
 		
 		private var _name:String;
 		private var _type:String;

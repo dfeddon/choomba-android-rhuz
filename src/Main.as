@@ -11,6 +11,7 @@ package
 	import com.choomba.TileBackground;
 	import com.choomba.TileCode;
 	import com.choomba.fx.Fire;
+	import com.choomba.utils.DateUtils;
 	import com.choomba.vo.InventoryTypeVO;
 	import com.choomba.vo.InventoryVO;
 	import com.dfeddon.rhuz.Basement;
@@ -76,7 +77,8 @@ package
 			currentLot.addChild(level);
 			
 			// add items
-			
+			//currentLot.items = AssetManager.getInstance().itemsArray;
+			addItems(AssetManager.getInstance().itemsArray);
 			
 			// add player to stage
 			var img:Image = new Image(AssetManager.getInstance()[currentLot.playerImage]);
@@ -121,7 +123,7 @@ package
 			timer.removeEventListener(TimerEvent.TIMER_COMPLETE, playerStartPos);
 			
 			// add start items
-			Studio.player.inv.push(new InventoryVO('Potion of Healing', new InventoryTypeVO(InventoryTypeVO.INVENTORY_TYPE_POTION), 
+			/*Studio.player.inv.push(new InventoryVO('Potion of Healing', new InventoryTypeVO(InventoryTypeVO.INVENTORY_TYPE_POTION), 
 				AssetManager.getInstance().invPotionBlueImg,
 				'This is the potion description and lets just see how many lines we can print on this particular item.'
 				)
@@ -150,8 +152,9 @@ package
 				AssetManager.getInstance().invHerbsImg,
 				'A small, leafy handful of herbs.'
 			)
-			);
+			);*/
 			
+			// effects
 			var fire:Fire = new Fire();
 			fire.x = 12 * 64 + (64 / 2);
 			fire.y = 12 * 64 + (64 / 2);
@@ -162,14 +165,16 @@ package
 			renderer.addEmitter( fire );
 			fire.start();
 			
+			// fow
 			if (Studio.currentLot.fogEnabled)
 			{
 				var fow:DisplayObject = currentLot.getChildByName('fog');
 				var obj:DisplayObject = currentLot.addChildAt(renderer, currentLot.getChildIndex(fow) - 1);
 			}
 			
+			// start prose
 			var today:Date = new Date();
-			var txt:String = '<b>' + today + '</b>';
+			var txt:String = '<b>' + DateUtils.timeStamp(today) + '</b>';
 			txt += '<br><br>Lorem ipsum dolor sit amet, <i>consectetur adipiscing elit</i>. Curabitur rutrum adipiscing malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec elementum aliquam orci, eget hendrerit tortor euismod non. Nam arcu nibh, mattis fermentum scelerisque et, suscipit vel purus. Phasellus arcu nibh, luctus quis ultricies ut, porta eu elit. In hac habitasse platea dictumst.';
 			txt += '<br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur rutrum adipiscing malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec elementum aliquam orci, eget hendrerit tortor euismod non. Nam arcu nibh, mattis fermentum scelerisque et, suscipit vel purus. Phasellus arcu nibh, luctus quis ultricies ut, porta eu elit. In hac habitasse platea dictumst.';
 			addProse(txt);

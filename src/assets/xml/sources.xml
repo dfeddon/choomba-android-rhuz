@@ -9,18 +9,18 @@
 	</xml>
 	<tmx>
 		<file src="scene1.tmx" id="scene1Map"/>
-		<file src="scene2.tmx" id="scene2Map"/>
-		<file src="scene3.tmx" id="scene3Map"/>
+		<!--<file src="scene2.tmx" id="scene2Map"/>
+		<file src="scene3.tmx" id="scene3Map"/>-->
 	</tmx>
 	<images>
 		<!--<file src="popupBG.gif" id="winBGImg"/>-->
 		<file src="s1_floor.jpg" id="s1FloorImg"/>
-		<file src="scene2bg.png" id="s2FloorImg"/>
-		<file src="scene3bg.png" id="s3FloorImg"/>
+		<!--<file src="scene2bg.png" id="s2FloorImg"/>
+		<file src="scene3bg.png" id="s3FloorImg"/>-->
 		<file src="playerMage.gif" id="playerMageImg"/>
 		<file src="scene1_1.gif" id="scene1_1Img"/>
-		<file src="scene2_1.png" id="scene2_1Img"/>
-		<file src="scene3_1a.png" id="scene3_1Img"/>
+		<!--<file src="scene2_1.png" id="scene2_1Img"/>
+		<file src="scene3_1a.png" id="scene3_1Img"/>-->
 		<!--<file src="scene1_4.gif" id="scene1_4Img"/> -->
 		<file src="invEquip.png" id="invEquipImg"/>
 		<file src="invItems.png" id="invItemsImg"/>
@@ -34,6 +34,9 @@
 		<file src="invHerbs.png" id="invHerbsImg"/>
 		<file src="invArrow.png" id="invArrowImg"/>
 	</images>
+	<items>
+		<item id="itmHornBlasting" imgS="invHornBlastingImg" imgL="invHornBlastingImg" takeable="true" loc="4,23" desc="When blown, its clarion call will rattle the very firmaments." invType="blowable" name="Horn of Blowing" />
+	</items>
 	<tileAssets>
 	</tileAssets>
 	<tileProperties>

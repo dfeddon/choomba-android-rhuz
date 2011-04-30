@@ -1,5 +1,7 @@
 package com.choomba.vo
 {
+	import flash.geom.Point;
+	
 	import org.osmf.net.StreamingURLResource;
 
 	public class AssetVO

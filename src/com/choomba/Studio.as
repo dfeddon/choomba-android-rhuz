@@ -4,10 +4,14 @@ package com.choomba
 	import com.choomba.components.TextBubble;
 	import com.choomba.prose.ProseWin;
 	import com.choomba.utils.GridUtils;
+	import com.choomba.vo.ItemVO;
 	import com.choomba.vo.TilesetPropertyVO;
 	import com.dfeddon.rhuz.Player;
 	import com.efnx.fps.fpsBox;
 	
+	import flash.data.SQLConnection;
+	import flash.data.SQLResult;
+	import flash.data.SQLStatement;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -17,8 +21,11 @@ package com.choomba
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.events.PressAndTapGestureEvent;
+	import flash.events.SQLErrorEvent;
+	import flash.events.SQLEvent;
 	import flash.events.TimerEvent;
 	import flash.events.TouchEvent;
+	import flash.filesystem.File;
 	import flash.geom.Point;
 	import flash.profiler.showRedrawRegions;
 	import flash.system.System;
@@ -45,6 +52,10 @@ package com.choomba
 
 		private static var _fog:Fog;
 		public static var cam:SteadyCam;
+		public static var proseWin:ProseWin;
+		
+		public static var sql:SQLConnection;
+		public static var sqlStmt:SQLStatement;
 		
 		private var touchBegin:TouchEvent;
 		private var tapTimer:Timer;
@@ -56,6 +67,9 @@ package com.choomba
 			super();
 			
 			studio = this;
+			
+			// sqlite
+			connect();
 			
 			// support autoOrients
 			stage.align = StageAlign.TOP_LEFT;
@@ -80,6 +94,54 @@ package com.choomba
 			
 			//addEventListener(MouseEvent.CLICK, clickHandler);
 			//addEventListener(MouseEvent.DOUBLE_CLICK, doubleClickHandler);
+		}
+		
+		protected function connect():void
+		{
+			var sqlFile:File;
+			var sqlSt:SQLStatement;
+			
+			sql = new SQLConnection();
+			sql.addEventListener(SQLEvent.OPEN, sqlOpenHandler);
+			sql.addEventListener(SQLErrorEvent.ERROR, sqlErrorHandler);
+			
+			var embededSessionDB:File = File.applicationDirectory.resolvePath("rhuz.db");
+			var writeSessionDB:File = File.applicationStorageDirectory.resolvePath("rhuz.db");
+			if (!writeSessionDB.exists)
+			{
+				trace('sql no db');
+				embededSessionDB.copyTo(writeSessionDB);
+			}
+			
+			sqlFile = writeSessionDB;
+			sql.openAsync(writeSessionDB);
+			trace('sqlite');
+		}
+		
+		private function sqlOpenHandler(e:SQLEvent):void
+		{
+			trace('sql success!');
+			
+			sqlStmt = new SQLStatement();
+			sqlStmt.addEventListener(SQLEvent.RESULT, sqlResult);
+			
+			sqlStmt.sqlConnection = sql;
+			sqlStmt.text = 'SELECT * FROM prose';
+			sqlStmt.execute();
+		}
+		
+		private function sqlErrorHandler(e:SQLErrorEvent):void
+		{
+			trace('sql error!');
+		}
+		
+		private function sqlResult(e:SQLEvent):void
+		{
+			trace('sql result');
+			
+			var result:SQLResult = sqlStmt.getResult();
+			
+			trace('hi', result.data[0].text);
 		}
 		
 		protected function init(e:Event):void
@@ -127,6 +189,27 @@ package com.choomba
 			if (obj.tileBG)
 				addChild(new TileBackground(AssetManager.getInstance()[obj.tileBG]));
 			return obj;
+		}
+		
+		protected function addItems(items:Array):void
+		{
+			var vo:ItemVO;
+			var img:Image;
+			var item:Item = new Item();
+			var len:int = items.length;
+			
+			for (var i:uint=0; i < len; i++)
+			{
+				vo = items[i] as ItemVO;
+				
+				//item.graphics.drawRect(0,0,DEFAULT_TILE_WIDTH,DEFAULT_TILE_HEIGHT);
+				item.image = new Image(AssetManager.getInstance()[vo.imgS]);
+				item.x = vo.pos.x + 32;
+				item.y = vo.pos.y + 32;
+				item.vo = vo;
+				currentLot.items.push(item);
+				currentLot.addChild(item);
+			}
 		}
 		
 		protected function addPlayer(obj:Player):Player
@@ -364,9 +447,12 @@ package com.choomba
 		
 		public function addProse(txt:String):void			
 		{
-			var pw:ProseWin = new ProseWin();
-			addChild(pw);
-			pw.addProse(txt);
+			proseWin = new ProseWin();
+			//pw.name = 'prose';
+			
+			addChild(proseWin);
+			
+			proseWin.addProse(txt);
 		}
 
 		public static function get studio():Studio

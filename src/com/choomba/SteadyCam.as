@@ -1,5 +1,6 @@
 package com.choomba 
 {
+	import com.choomba.prose.ProseWin;
 	import com.dfeddon.rhuz.Player;
 	import com.gskinner.motion.GTween;
 	import com.gskinner.motion.easing.Sine;
@@ -176,6 +177,15 @@ package com.choomba
 				moveObj.y = parent.transform.matrix.ty;
 				moveObj.visible = false;
 			}
+			
+			if (Studio.proseWin)
+			{
+				trace('::', Studio.proseWin.pos, pTo.x);
+				/*if (Studio.proseWin.pos == ProseWin.POS_LEFT)
+					pTo.x = 0;//Studio.proseWin.width;
+				else pTo.x += (stage.fullScreenWidth - 100) / 2;*/// Studio.proseWin.width;
+			}
+			trace('->', pTo.x);
 			
 			// calculate speed
 			pFrom = new Point(x, y);

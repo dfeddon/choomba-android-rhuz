@@ -1,5 +1,8 @@
 package com.choomba
 {
+	import com.choomba.vo.AssetVO;
+	import com.choomba.vo.ItemVO;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
@@ -11,8 +14,6 @@ package com.choomba
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.system.System;
-	
-	import com.choomba.vo.AssetVO;
 
 	public dynamic class AssetManager extends EventDispatcher
 	{
@@ -28,6 +29,8 @@ package com.choomba
 		private var xmlArray:Array;
 		private var tmxArray:Array;
 		private var imagesArray:Array;
+		private var _itemsArray:Array;
+		//public var itemsData:Array;
 		
 		private var _rawMaps:Array;
 		
@@ -71,28 +74,42 @@ package com.choomba
 			xmlArray = xmlToArrayHelper(sources..xml.file, AssetVO.ASSET_TYPE_XML);
 			tmxArray = xmlToArrayHelper(sources..tmx.file, AssetVO.ASSET_TYPE_TMX);
 			imagesArray = xmlToArrayHelper(sources..images.file, AssetVO.ASSET_TYPE_IMAGE);
+			itemsArray = xmlToItems(sources..items.item);
 			
 			assetsTotal = xmlArray.length + tmxArray.length + imagesArray.length;
-			
-			var i:uint;
-			
-			// load xml
-			for (i = 0; i < xmlArray.length; i++)
-				loadAsset(AssetVO(xmlArray[i]));
-
-			// load eol
-			for (i = 0; i < tmxArray.length; i++)
-				loadAsset(AssetVO(tmxArray[i]));
-
-			// load images
-			for (i = 0; i < imagesArray.length; i++)
-				loadAsset(AssetVO(imagesArray[i]));
 			
 			// dispose sources XML
 			System.disposeXML(sources);
 			
 			// remove listener
 			event.currentTarget.removeEventListener(Event.COMPLETE, sourcesLoadedHandler);
+			
+			var i:uint;
+			
+			// load xml
+			for (i = 0; i < xmlArray.length; i++)
+				loadAsset(AssetVO(xmlArray[i]));
+			
+			// load eol
+			for (i = 0; i < tmxArray.length; i++)
+				loadAsset(AssetVO(tmxArray[i]));
+			
+			// load images
+			for (i = 0; i < imagesArray.length; i++)
+				loadAsset(AssetVO(imagesArray[i]));
+			
+		}
+		
+		private function xmlToItems(xml:XMLList):Array
+		{
+			var arr:Array = new Array();
+			
+			for each(var i:XML in xml)
+			{
+				arr.push(new ItemVO(i));
+			}
+			
+			return arr;
 		}
 		
 		private function xmlToArrayHelper(xml:XMLList, type:String):Array
@@ -214,6 +231,8 @@ package com.choomba
 		
 		private function release():void
 		{
+			System.gc();
+			
 			trace('release', System.totalMemory / 1024, System.freeMemory);
 		}
 
@@ -226,6 +245,17 @@ package com.choomba
 		{
 			_rawMaps = value;
 		}
+
+		public function get itemsArray():Array
+		{
+			return _itemsArray;
+		}
+
+		public function set itemsArray(value:Array):void
+		{
+			_itemsArray = value;
+		}
+
 
 	}
 }

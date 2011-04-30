@@ -83,9 +83,24 @@ package com.choomba
 		
 		protected function tweenCompleteHandler(e:GTween=null):void
 		{
-			trace('tween complete', e);
+			trace('# tween complete', e);
 			
 			moving = false;
+			
+			if (sheet)
+			{
+				sheet.stop();
+				//frame = 0; // reset
+				
+				switch(sheet.type)
+				{
+					case 'walkEast': sheet.play('standEast'); break;
+					case 'walkWest': sheet.play('standWest'); break;
+					case 'walkNorth': sheet.play('standNorth'); break;
+					case 'walkSouth': sheet.play('standSouth'); break;
+				}
+			}
+			
 		}
 
 		public function get sheet():Sheet

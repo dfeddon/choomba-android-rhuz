@@ -72,9 +72,9 @@ package com.choomba.utils
 		{
 			var returnValue:Object = new Object();
 			var ids:Array;
-			var properties:Array;
+			var properties:Array = new Array();
 			var id:int;
-			var property:TilesetPropertyVO;
+			var property:Array;//TilesetPropertyVO;
 			var isCollidable:Boolean = false;
 			
 			var x:Number = Math.floor(point.x / Studio.DEFAULT_TILE_WIDTH);
@@ -83,7 +83,7 @@ package com.choomba.utils
 			if (!layerName)
 			{
 				ids = new Array();
-				properties = new Array();
+				var props:Array = new Array();
 				for (var key:String in metaLayer)
 				{
 					// ids
@@ -97,13 +97,15 @@ package com.choomba.utils
 							//trace('## ', metaLayer[key][y][x], key, tile.id);
 							if (tile.id == metaLayer[key][y][x] && tile.id > 0 && metaLayer[key][y][x] > 0)
 							{
-								properties[key] = [];
+								props[key] = [];
 								for each(var prop:TilesetPropertyVO in tile.properties)
 								{
-									properties[key] = prop;
+									props[key] = prop;
 									trace('   ', prop.name, prop.value);
 									if (prop.name == "collidable" && prop.value == "true")
 										isCollidable = true;
+									
+									properties.push(prop);
 								}
 							}
 						}
@@ -182,6 +184,14 @@ package com.choomba.utils
 			for (var i:uint = 0; i < layer.length; i++)
 			{
 				trace(layer[i]);
+			}
+		}
+		
+		public static function printObject(o:Object):void
+		{
+			for(var val:* in o)
+			{
+				trace('[' + typeof(o[val]) + '] ' + val + ' => ' + o[val]);
 			}
 		}
 	}

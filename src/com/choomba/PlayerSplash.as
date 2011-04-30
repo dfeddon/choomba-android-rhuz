@@ -3,6 +3,7 @@ package com.choomba
 	import com.choomba.Image;
 	import com.choomba.fx.MutualG;
 	import com.choomba.fx.Sparkler;
+	import com.choomba.utils.DateUtils;
 	import com.dfeddon.rhuz.Player;
 	import com.gskinner.motion.GTween;
 	import com.gskinner.motion.easing.Exponential;
@@ -164,6 +165,11 @@ package com.choomba
 					break
 					
 				case 'journal':
+					var today:Date = new Date();
+					var txt:String = '<b>' + DateUtils.timeStamp(today) + '</b>';
+					txt += '<br><br>Lorem ipsum dolor sit amet, <i>consectetur adipiscing elit</i>. Curabitur rutrum adipiscing malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec elementum aliquam orci, eget hendrerit tortor euismod non. Nam arcu nibh, mattis fermentum scelerisque et, suscipit vel purus. Phasellus arcu nibh, luctus quis ultricies ut, porta eu elit. In hac habitasse platea dictumst.';
+					txt += '<br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur rutrum adipiscing malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec elementum aliquam orci, eget hendrerit tortor euismod non. Nam arcu nibh, mattis fermentum scelerisque et, suscipit vel purus. Phasellus arcu nibh, luctus quis ultricies ut, porta eu elit. In hac habitasse platea dictumst.';
+					Studio.studio.addProse(txt);
 					break;
 				
 				default: trace('error');

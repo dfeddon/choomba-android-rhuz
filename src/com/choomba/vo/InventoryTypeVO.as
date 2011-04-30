@@ -2,12 +2,12 @@ package com.choomba.vo
 {
 	public class InventoryTypeVO
 	{
-		public static const INVENTORY_TYPE_POTION:String = 'invTypePotion';
-		public static const INVENTORY_TYPE_WEAPON:String = 'invTypeWeapon';
-		public static const INVENTORY_TYPE_SCROLL:String = 'invTypeScroll';
-		public static const INVENTORY_TYPE_WEARABLE:String = 'invTypeWearable';
-		public static const INVENTORY_TYPE_BLOWABLE:String = 'invTypeBlowable';
-		public static const INVENTORY_TYPE_EDIBLE:String = 'invTypeEdible';
+		public static const INVENTORY_TYPE_POTION:String = 'potion';
+		public static const INVENTORY_TYPE_WEAPON:String = 'weapon';
+		public static const INVENTORY_TYPE_SCROLL:String = 'scroll';
+		public static const INVENTORY_TYPE_WEARABLE:String = 'wearable';
+		public static const INVENTORY_TYPE_BLOWABLE:String = 'blowable';
+		public static const INVENTORY_TYPE_EDIBLE:String = 'edible';
 		
 		private var _type:String;
 		private var _actions:Array = new Array();
