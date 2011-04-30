@@ -203,8 +203,9 @@ package com.dfeddon.rhuz
 			if (Studio.currentLot.fogEnabled)
 				Studio.fog.update();
 			
-			var o:Object = GridUtils.getMapNodeFromCoordinates(new Point(this.x, this.y));
-			GridUtils.printObject(o);
+			var pt:Object = GridUtils.getMapNodeFromCoordinates(new Point(this.x, this.y));
+			var pp:Point = new Point(pt.x, pt.y);
+			GridUtils.printObject(pt);
 			//GridUtils.printObject(o.properties);
 			
 			/*for each (var prop:TilesetPropertyVO in o.properties)
@@ -215,15 +216,20 @@ package com.dfeddon.rhuz
 					trace("TAKEABLE", prop.value);
 			}*/
 			
+			var c:int = 0;
 			for each(var item:Item in Studio.currentLot.items)
 			{
-				trace('----->', item.vo.loc, item.vo.pos);
-				if (this.hitTestObject(item))
+				trace('----->', item.vo.loc, pp);
+				
+				if (pp.x == item.vo.loc.x && pp.y == item.vo.loc.y)
 				{
 					trace("HIT ITEM!");
 					if (item.vo.takeable)
 					{
-						// remove from lot
+						// remove from lot list
+						Studio.currentLot.items.splice(c, 1);
+						
+						// remove from stage
 						Studio.currentLot.removeChildAt(
 							Studio.currentLot.getChildIndex(item));
 						
@@ -231,6 +237,8 @@ package com.dfeddon.rhuz
 						item.itemToInv();
 					}
 				}
+				
+				c++;
 			}
 
 		}

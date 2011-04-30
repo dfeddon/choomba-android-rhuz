@@ -1,5 +1,6 @@
 package com.choomba
 {
+	import com.choomba.utils.GridUtils;
 	import com.choomba.vo.InventoryActionVO;
 	import com.choomba.vo.InventoryVO;
 	import com.dfeddon.rhuz.Player;
@@ -159,7 +160,7 @@ package com.choomba
 			{
 				case InventoryActionVO.INVENTORY_ACTION_DROP:
 					
-					trace('dropping', _cItem.item.name);
+					trace('dropping', _cItem.name);
 					
 					var p:Player = Studio.player;
 					
@@ -178,6 +179,14 @@ package com.choomba
 							break;
 						}
 					}
+					
+					// update item location
+					var o:Object = GridUtils.getMapNodeFromCoordinates(new Point(p.x, p.y));
+					var newPoint:Point = new Point(o.x, o.y);
+					_cItem.item.vo.loc = newPoint;
+					
+					// add item back to lot list
+					Studio.currentLot.items.push(_cItem.item);
 					
 					// close
 					closePopup();

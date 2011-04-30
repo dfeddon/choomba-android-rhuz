@@ -82,6 +82,9 @@ package com.choomba.vo
 		public function set loc(value:Point):void
 		{
 			_loc = value;
+			
+			_pos = new Point(_loc.x * Studio.DEFAULT_TILE_WIDTH,
+				_loc.y * Studio.DEFAULT_TILE_HEIGHT);
 		}
 
 		public function get desc():String
