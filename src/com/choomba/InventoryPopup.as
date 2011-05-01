@@ -9,6 +9,7 @@ package com.choomba
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.events.TouchEvent;
 	import flash.geom.Point;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -106,7 +107,8 @@ package com.choomba
 			sbt.x = 555;
 			sbt.y = 150;
 			sbt.setTextFormat(sbtf);
-			sbt.addEventListener(MouseEvent.CLICK, submitClickHandler);
+			//sbt.addEventListener(MouseEvent.CLICK, submitClickHandler);
+			sbt.addEventListener(TouchEvent.TOUCH_END, submitClickHandler, false, 0, true);
 			addChild(sbt);
 		}
 		
@@ -150,11 +152,11 @@ package com.choomba
 			win.addEventListener(MouseEvent.CLICK, itemClickHandler);
 		}
 		
-		private function submitClickHandler(e:MouseEvent):void
+		private function submitClickHandler(e:TouchEvent):void
 		{
 			e.stopImmediatePropagation();
 			
-			trace("SUBMIT", _cItem.name, _cAction);
+			//trace("SUBMIT", _cItem.name, _cAction);
 			
 			switch(_cAction)
 			{

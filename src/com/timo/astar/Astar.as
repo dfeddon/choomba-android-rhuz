@@ -227,7 +227,7 @@
 		 * @return
 		 */
 		private function isWalkable(x:int, y:int):Boolean {
-			var walkable:Boolean = _map.get(x, y) == 1;
+			var walkable:Boolean = _map.get(x, y) == 0;//1;
 			if (walkable) return true;
 			
 			return false;

@@ -1,6 +1,7 @@
 package com.choomba
 {
 	import com.choomba.Image;
+	import com.choomba.fx.CatherineWheel;
 	import com.choomba.fx.MutualG;
 	import com.choomba.fx.Sparkler;
 	import com.choomba.utils.DateUtils;
@@ -130,27 +131,63 @@ package com.choomba
 			
 			var p:Player = Studio.player;
 			
+			var area:int;
+			var renderer:BitmapRenderer;
+			var magicType:String = 'wheel';
+			
 			switch(e.currentTarget.name)
 			{
 				case 'magic':
 					
-					emitter = new MutualG();
-					
-					var area:int = 200;
-					var renderer:BitmapRenderer = new BitmapRenderer( 
-						new Rectangle( p.x - (area/2), p.y - (area/2), area, area ) 
-					);
-					renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
-					renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
-					Studio.currentLot.addChild( renderer );
-					
-					emitter = new Sparkler( renderer );
-					renderer.addEmitter( emitter );
-					emitter.start( );
-					/*renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
-					renderer.addEmitter( emitter );
-					Studio.currentLot.addChild( renderer );
-					emitter.start( );*/
+					switch(magicType)
+					{
+						case 'sparkler':
+							area = 200;
+							renderer = new BitmapRenderer( 
+								new Rectangle( p.x - (area/2), p.y - (area/2), area, area ) 
+							);
+							renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
+							renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
+							Studio.currentLot.addChild( renderer );
+							
+							emitter = new Sparkler( renderer );
+							renderer.addEmitter( emitter );
+							emitter.start( );
+							
+							break;
+						
+						case 'wheel':
+							emitter = new CatherineWheel();
+
+							area = 200;
+							renderer = new BitmapRenderer( 
+								new Rectangle( p.x - (area/2), p.y - (area/2), area, area ) );
+							renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
+							renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.97,0 ] ) );
+							renderer.addEmitter( emitter );
+							Studio.currentLot.addChild( renderer );
+							
+							emitter.x = p.x;
+							emitter.y = p.y;
+							
+							emitter.start( );
+							
+							break;
+						
+						case 'mutualG':
+							emitter = new MutualG();
+							
+							area = 200;
+							renderer = new BitmapRenderer( 
+								new Rectangle( p.x - (area/2), p.y - (area/2), area, area ) );
+							renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
+							renderer.addEmitter( emitter );
+							Studio.currentLot.addChild( renderer );
+							
+							emitter.start( );
+							
+							break;
+					}
 					
 					break;
 				

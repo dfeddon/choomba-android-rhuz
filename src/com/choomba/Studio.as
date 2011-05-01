@@ -256,10 +256,29 @@ package com.choomba
 			
 			var description:String;
 			
+			// find tile property desc
 			for each(var prop:TilesetPropertyVO in grid.properties)
 			{
 				if (prop.name == "description")
 					description = prop.value;
+			}
+			
+			// find item desc
+			for each(var item:Item in Studio.currentLot.items)
+			{
+				trace('->--->', item.vo.loc, grid);
+				
+				if (grid.x == item.vo.loc.x && grid.y == item.vo.loc.y)
+				{
+					var idesc:String = item.vo.desc1;
+					
+					if (description)
+					{
+						description += '<br><br>You also see ' + item.vo.prep + 
+							' ' + item.vo.name.toLowerCase() + '.  ' + idesc;
+					}
+					else description = idesc;
+				}
 			}
 			
 			// remove pre-existing text bubble
@@ -369,7 +388,8 @@ package com.choomba
 			}
 			else
 			{
-				player.moveToPos(point, player.speed);
+				//player.moveToPos(point, player.speed);
+				player.pathToPoint(point, player.speed);
 			}
 			/*
 			//var game:Game = FP.world as Game;

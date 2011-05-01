@@ -1,6 +1,9 @@
 package com.choomba
 {
+	import com.choomba.utils.GridUtils;
 	import com.gskinner.motion.GTween;
+	import com.timo.astar.Astar;
+	import com.timo.astar.Node;
 	
 	import flash.display.BlendMode;
 	import flash.geom.Point;
@@ -20,6 +23,8 @@ package com.choomba
 		private var _active:Boolean;
 
 		private var _isMobile:Boolean;
+		
+		protected var path:Vector.<Node>;
 		
 		public function Actor(image:Image=null, isSheet:Boolean=false)
 		{
@@ -56,6 +61,42 @@ package com.choomba
 			
 		}*/
 		
+		public function pathToPoint(point:Point, speed:int):void
+		{
+			// find path a*
+			var gridTo:Object = GridUtils.getMapNodeFromCoordinates(point);
+			var gridFrom:Object = GridUtils.getMapNodeFromCoordinates(new Point(this.x, this.y));
+			var a:Astar = new Astar(GridUtils.metaLayer['walls']);
+			path = a.findPath(new Node(gridFrom.x, gridFrom.y), new Node(gridTo.x, gridTo.y));// as Vector.<com.timo.astar.Node>;
+			
+			if (!path) 
+			{
+				trace("PATHFINDING FAILED!!!");
+				return;
+			}
+			
+			// remove first node (currnt/start position)
+			path.shift();
+			
+			for each(var node:Node in path)
+				trace('-->', node.name);
+			
+			var speed:int = 65;
+			moveToPos(new Point(path[0].x * Studio.DEFAULT_TILE_WIDTH, 
+				path[0].y * Studio.DEFAULT_TILE_HEIGHT), speed);
+		}
+		
+		public function moveToNode():void
+		{
+			// remove last position
+			path.shift();
+			
+			var speed:int = 65;
+			
+			moveToPos(new Point(path[0].x * Studio.DEFAULT_TILE_WIDTH, 
+				path[0].y * Studio.DEFAULT_TILE_HEIGHT), speed);
+		}
+		
 		public function moveToPos(pTo:Point, s:int):void
 		{
 			if (!active) return;
@@ -84,6 +125,13 @@ package com.choomba
 		protected function tweenCompleteHandler(e:GTween=null):void
 		{
 			trace('# tween complete', e);
+			
+			if (path && path.length > 1)
+			{
+				trace('## next path', path[0].x, path[0].y);
+				moveToNode();
+				return;
+			}
 			
 			moving = false;
 			

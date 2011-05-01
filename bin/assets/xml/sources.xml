@@ -35,7 +35,7 @@
 		<file src="invArrow.png" id="invArrowImg"/>
 	</images>
 	<items>
-		<item id="itmHornBlasting" imgS="invHornBlastingImg" imgL="invHornBlastingImg" takeable="true" loc="4,23" desc="When blown, its clarion call will rattle the very firmaments." invType="blowable" name="Horn of Blowing" />
+		<item id="itmHornBlasting" imgS="invHornBlastingImg" imgL="invHornBlastingImg" takeable="true" loc="4,23" desc="When blown, its clarion call will rattle the very firmaments." invType="blowable" prep="a" name="Horn of Blowing" desc1="A curved husk of unchipped bone, the horn's embouchure glints of gold." />
 	</items>
 	<tileAssets>
 	</tileAssets>

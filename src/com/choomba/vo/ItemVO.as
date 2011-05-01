@@ -15,6 +15,8 @@ package com.choomba.vo
 		private var _desc:String;
 		private var _invType:String;
 		private var _name:String;
+		private var _prep:String;
+		private var _desc1:String;
 		
 		public function ItemVO(xml:XML)
 		{
@@ -24,6 +26,8 @@ package com.choomba.vo
 			_desc = xml.@desc;
 			_invType = xml.@invType;
 			_name = xml.@name;
+			_prep = xml.@prep;
+			_desc1 = xml.@desc1;
 			
 			if (String(xml.@takeable).toLowerCase() == 'true')
 				_takeable = true;
@@ -125,6 +129,26 @@ package com.choomba.vo
 		public function set pos(value:Point):void
 		{
 			_pos = value;
+		}
+
+		public function get prep():String
+		{
+			return _prep;
+		}
+
+		public function set prep(value:String):void
+		{
+			_prep = value;
+		}
+
+		public function get desc1():String
+		{
+			return _desc1;
+		}
+
+		public function set desc1(value:String):void
+		{
+			_desc1 = value;
 		}
 
 

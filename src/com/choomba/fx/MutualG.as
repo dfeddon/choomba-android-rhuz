@@ -1,5 +1,8 @@
 package com.choomba.fx
 {
+	import com.choomba.Studio;
+	import com.dfeddon.rhuz.Player;
+	
 	import org.flintparticles.common.counters.Blast;
 	import org.flintparticles.common.displayObjects.Dot;
 	import org.flintparticles.common.initializers.ColorInit;
@@ -16,14 +19,15 @@ package com.choomba.fx
 	{
 		public function MutualG()
 		{
-			counter = new Blast( 30 );
+			var p:Player = Studio.player;
+			counter = new Blast( 20 );
 			
 			addInitializer( new SharedImage( new Dot( 2 ) ) );
 			addInitializer( new ColorInit( 0xFFFF00FF, 0xFF00FFFF ) );
-			addInitializer( new Position( new RectangleZone( 10, 10, 380, 380 ) ) );
+			addInitializer( new Position( new RectangleZone( p.x - 90, p.y - 90, 180, 180 ) ) );
 			
-			addAction( new MutualGravity( 10, 500, 3 ) );
-			addAction( new BoundingBox( 0, 0, 400, 400 ) );
+			addAction( new MutualGravity( 10, 200, 3 ) );
+			addAction( new BoundingBox( p.x - 100, p.y - 100, 200, 200 ) );
 			addAction( new SpeedLimit( 150 ) );
 			addAction( new Move() );
 		}

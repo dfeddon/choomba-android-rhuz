@@ -3,6 +3,8 @@ package com.choomba
 	import com.choomba.vo.InventoryTypeVO;
 	import com.choomba.vo.InventoryVO;
 	import com.choomba.vo.ItemVO;
+	
+	import flash.events.TouchEvent;
 
 	public class Item extends Prop
 	{
@@ -13,6 +15,12 @@ package com.choomba
 			super();
 			
 			this.mouseEnabled = false;
+			addEventListener(TouchEvent.TOUCH_END, touchEndListener);
+		}
+		
+		private function touchEndListener(e:TouchEvent):void
+		{
+			trace('touch!');
 		}
 		
 		public function itemToInv():void
