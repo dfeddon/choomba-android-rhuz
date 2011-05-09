@@ -2,6 +2,7 @@ package com.choomba
 {
 	import com.choomba.vo.AssetVO;
 	import com.choomba.vo.ItemVO;
+	import com.choomba.vo.NpcVO;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -30,6 +31,7 @@ package com.choomba
 		private var tmxArray:Array;
 		private var imagesArray:Array;
 		private var _itemsArray:Array;
+		private var _npcArray:Array;
 		//public var itemsData:Array;
 		
 		private var _rawMaps:Array;
@@ -75,6 +77,7 @@ package com.choomba
 			tmxArray = xmlToArrayHelper(sources..tmx.file, AssetVO.ASSET_TYPE_TMX);
 			imagesArray = xmlToArrayHelper(sources..images.file, AssetVO.ASSET_TYPE_IMAGE);
 			itemsArray = xmlToItems(sources..items.item);
+			npcArray = xmlToNpc(sources..npcs.npc);
 			
 			assetsTotal = xmlArray.length + tmxArray.length + imagesArray.length;
 			
@@ -107,6 +110,18 @@ package com.choomba
 			for each(var i:XML in xml)
 			{
 				arr.push(new ItemVO(i));
+			}
+			
+			return arr;
+		}
+		
+		private function xmlToNpc(xml:XMLList):Array
+		{
+			var arr:Array = new Array();
+			
+			for each(var i:XML in xml)
+			{
+				arr.push(new NpcVO(i));
 			}
 			
 			return arr;
@@ -254,6 +269,16 @@ package com.choomba
 		public function set itemsArray(value:Array):void
 		{
 			_itemsArray = value;
+		}
+
+		public function get npcArray():Array
+		{
+			return _npcArray;
+		}
+
+		public function set npcArray(value:Array):void
+		{
+			_npcArray = value;
 		}
 
 

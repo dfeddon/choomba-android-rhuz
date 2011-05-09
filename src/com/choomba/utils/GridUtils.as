@@ -68,7 +68,8 @@ package com.choomba.utils
 			//printMap();
 		}
 		
-		public static function getMapNodeFromCoordinates(point:Point, layerName:String=null):Object
+		public static function getMapNodeFromCoordinates(point:Point, 
+														 layerName:String=null):Object
 		{
 			var returnValue:Object = new Object();
 			var ids:Array;

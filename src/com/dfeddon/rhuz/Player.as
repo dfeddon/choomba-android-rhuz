@@ -149,16 +149,7 @@ package com.dfeddon.rhuz
 				Studio.cam.reset();
 			}
 			
-			// find path a*
-			//var gridTo:Object = GridUtils.getMapNodeFromCoordinates(pTo);
-			//var gridFrom:Object = GridUtils.getMapNodeFromCoordinates(new Point(this.x, this.y));
-			//var a:Astar = new Astar(GridUtils.metaLayer['walls']);
-			//var path:Vector.<Node> = a.findPath(new Node(gridFrom.x, gridFrom.y), new Node(gridTo.x, gridTo.y));// as Vector.<com.timo.astar.Node>;
-			//GridUtils.buildMapWithCollidables();
-			//trace('A* path:', path);
-			trace('->', pTo);
 			var center:Point = GridUtils.getMapNodeFromCoordinates(pTo).tileCenter;
-			trace('->', center);
 			
 			super.moveToPos(center, s);
 			
@@ -225,8 +216,9 @@ package com.dfeddon.rhuz
 				
 				if (pp.x == item.vo.loc.x && pp.y == item.vo.loc.y)
 				{
-					trace("HIT ITEM!");
-					if (item.vo.takeable)
+					// item in node
+					// only allow taking of items if end-path
+					if (item.vo.takeable && path && path.length == 1)
 					{
 						// remove from lot list
 						Studio.currentLot.items.splice(c, 1);

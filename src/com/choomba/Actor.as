@@ -67,9 +67,11 @@ package com.choomba
 			var gridTo:Object = GridUtils.getMapNodeFromCoordinates(point);
 			var gridFrom:Object = GridUtils.getMapNodeFromCoordinates(new Point(this.x, this.y));
 			var a:Astar = new Astar(GridUtils.metaLayer['walls']);
+			
 			path = a.findPath(new Node(gridFrom.x, gridFrom.y), new Node(gridTo.x, gridTo.y));// as Vector.<com.timo.astar.Node>;
 			
-			if (!path) 
+			// if path fails or nodes are 20+
+			if (!path || path.length >= 20) 
 			{
 				trace("PATHFINDING FAILED!!!");
 				return;

@@ -80,6 +80,9 @@ package
 			//currentLot.items = AssetManager.getInstance().itemsArray;
 			addItems(AssetManager.getInstance().itemsArray);
 			
+			// add npcs
+			addNpc(AssetManager.getInstance().npcArray);
+			
 			// add player to stage
 			var img:Image = new Image(AssetManager.getInstance()[currentLot.playerImage]);
 			var startX:int = currentLot.startTile[0] * Studio.DEFAULT_TILE_WIDTH;

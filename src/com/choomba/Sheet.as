@@ -109,6 +109,7 @@ package com.choomba
 			for (var i:uint = 0; i < vo.aniMap.length; i++)
 			{
 				newMap.push(vo.aniMap[i]);
+				//if (vo.aniMap.length > 1)
 				newMap.push(fr);
 			}
 			//trace(newMap);
@@ -215,7 +216,8 @@ package com.choomba
 					if(ob.animCount == ob.anim.length)
 					{
 						//reset to start
-						ob.animCount = 0;
+						if (vo.reset)
+							ob.animCount = 0;
 						
 						// if animation doesn't repeat, stop
 						if (!vo.repeater) 

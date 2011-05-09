@@ -5,8 +5,10 @@ package com.choomba
 	import com.choomba.prose.ProseWin;
 	import com.choomba.utils.GridUtils;
 	import com.choomba.vo.ItemVO;
+	import com.choomba.vo.NpcVO;
 	import com.choomba.vo.TilesetPropertyVO;
 	import com.dfeddon.rhuz.Player;
+	import com.dfeddon.rhuz.Skeleton;
 	import com.efnx.fps.fpsBox;
 	
 	import flash.data.SQLConnection;
@@ -209,6 +211,32 @@ package com.choomba
 				item.vo = vo;
 				currentLot.items.push(item);
 				currentLot.addChild(item);
+			}
+		}
+		
+		protected function addNpc(items:Array):void
+		{
+			var vo:NpcVO;
+			var img:Image;
+			var npc:Npc;
+			var len:int = items.length;
+			
+			for (var i:uint=0; i < len; i++)
+			{
+				vo = items[i] as NpcVO;
+				//item.graphics.drawRect(0,0,DEFAULT_TILE_WIDTH,DEFAULT_TILE_HEIGHT);
+				//npc.image = new Image(AssetManager.getInstance()[vo.imgS]);
+				switch(vo.id)
+				{
+					case 'skeleton':
+						npc = new Skeleton(new Image(AssetManager.getInstance()[vo.image]), true, vo) as Skeleton;
+						break;
+				}
+				npc.x = vo.pos.x + 32;
+				npc.y = vo.pos.y + 32;
+				npc.vo = vo;
+				currentLot.npcs.push(npc);
+				currentLot.addChild(npc);
 			}
 		}
 		

@@ -6,13 +6,17 @@ package com.choomba.vo
 		private var _aniMap:Array;
 		private var _type:String;
 		private var _repeater:Boolean;
+		private var _reset:Boolean;
 		
-		public function SheetMapVO(index:int=NaN, map:Array=null, type:String="", repeater:Boolean=true)
+		public function SheetMapVO(index:int=NaN, map:Array=null, type:String="", 
+								   repeater:Boolean=true, reset:Boolean=true)
 		{
-			this.index = index;
-			this.aniMap = map;
-			if (type) this.type = type;
-			this.repeater = repeater;
+			_index = index;
+			_aniMap = map;
+			_repeater = repeater;
+			_reset = reset;
+			if (type) 
+				_type = type;
 		}
 
 		public function get index():int
@@ -53,6 +57,16 @@ package com.choomba.vo
 		public function set repeater(value:Boolean):void
 		{
 			_repeater = value;
+		}
+
+		public function get reset():Boolean
+		{
+			return _reset;
+		}
+
+		public function set reset(value:Boolean):void
+		{
+			_reset = value;
 		}
 
 

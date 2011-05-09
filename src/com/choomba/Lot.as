@@ -22,6 +22,7 @@ package com.choomba
 		public var playerImage:String;
 		public var startTile:Array;
 		public var items:Array;
+		public var npcs:Array;
 		
 		private var _lightingType:String;
 		
@@ -38,6 +39,7 @@ package com.choomba
 			super();
 			
 			items = new Array();
+			npcs = new Array();
 			
 			// steady cam requires blend mode type 'layer'
 			blendMode = BlendMode.LAYER;
