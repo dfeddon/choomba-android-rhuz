@@ -1,22 +1,36 @@
 package com.choomba.vo
 {
+	import com.choomba.Prop;
+
 	public class SheetMapVO
 	{
 		private var _index:int;
 		private var _aniMap:Array;
 		private var _type:String;
-		private var _repeater:Boolean;
+		private var _repeater:int;
 		private var _reset:Boolean;
+		private var _owner:Prop;
+		private var _speedOffset:int;
 		
 		public function SheetMapVO(index:int=NaN, map:Array=null, type:String="", 
-								   repeater:Boolean=true, reset:Boolean=true)
+								   repeater:int=0, reset:Boolean=true, owner:Prop=null,
+									speedOffset:int=0)
 		{
 			_index = index;
 			_aniMap = map;
 			_repeater = repeater;
 			_reset = reset;
+			_speedOffset = speedOffset;
 			if (type) 
 				_type = type;
+			if (owner)
+				_owner = owner;
+		}
+		
+		public function sheetComplete():void
+		{
+			if (_owner)
+				_owner.sheetComplete(this);
 		}
 
 		public function get index():int
@@ -49,12 +63,12 @@ package com.choomba.vo
 			_type = value;
 		}
 
-		public function get repeater():Boolean
+		public function get repeater():int
 		{
 			return _repeater;
 		}
 
-		public function set repeater(value:Boolean):void
+		public function set repeater(value:int):void
 		{
 			_repeater = value;
 		}
@@ -67,6 +81,26 @@ package com.choomba.vo
 		public function set reset(value:Boolean):void
 		{
 			_reset = value;
+		}
+
+		public function get owner():Prop
+		{
+			return _owner;
+		}
+
+		public function set owner(value:Prop):void
+		{
+			_owner = value;
+		}
+
+		public function get speedOffset():int
+		{
+			return _speedOffset;
+		}
+
+		public function set speedOffset(value:int):void
+		{
+			_speedOffset = value;
 		}
 
 

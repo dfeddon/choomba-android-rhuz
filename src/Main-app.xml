@@ -87,7 +87,7 @@
 		<!-- The window's initial maximum size, specified as a width/height pair in pixels, such as "1600 1200". Optional. -->
 		<!-- <maxSize></maxSize> -->
 
-		<autoOrients>true</autoOrients>
+		<autoOrients>false</autoOrients>
 		<aspectRatio>landscape</aspectRatio>
     	<fullScreen>true</fullScreen>
     	<visible>true</visible>

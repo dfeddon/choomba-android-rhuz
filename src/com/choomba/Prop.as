@@ -1,5 +1,7 @@
 package com.choomba
 {
+	import com.choomba.vo.SheetMapVO;
+	
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	
@@ -33,6 +35,13 @@ package com.choomba
 			// add to stage
 			addChild(image);
 		}
+		
+		public function sheetComplete(vo:SheetMapVO):void
+		{
+			
+		}
+		
+		////////////////////////////////////////
 
 		public function get image():Image
 		{

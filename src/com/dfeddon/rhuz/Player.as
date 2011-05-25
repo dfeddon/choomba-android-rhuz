@@ -52,15 +52,15 @@ package com.dfeddon.rhuz
 			
 			if (isSheet)
 			{
-				sheet.mapArray.push(new SheetMapVO(1, [0,1,2,3,4,5,6,7], 'walkEast', true));
-				sheet.mapArray.push(new SheetMapVO(2, [9,10,11,12,13,14,15,16], 'walkWest', true));
-				sheet.mapArray.push(new SheetMapVO(3, [18,19,20,21,22,23,24,25], 'walkNorth', true));
-				sheet.mapArray.push(new SheetMapVO(4, [27,28,29,30,31,32,33,34], 'walkSouth', true));
+				sheet.mapArray.push(new SheetMapVO(1, [0,1,2,3,4,5,6,7], 'walkEast', 0));
+				sheet.mapArray.push(new SheetMapVO(2, [9,10,11,12,13,14,15,16], 'walkWest', 0));
+				sheet.mapArray.push(new SheetMapVO(3, [18,19,20,21,22,23,24,25], 'walkNorth', 0));
+				sheet.mapArray.push(new SheetMapVO(4, [27,28,29,30,31,32,33,34], 'walkSouth', 0));
 				
-				sheet.mapArray.push(new SheetMapVO(5, [8], 'standEast', false));
-				sheet.mapArray.push(new SheetMapVO(6, [17], 'standWest', false));
-				sheet.mapArray.push(new SheetMapVO(7, [26], 'standNorth', false));
-				sheet.mapArray.push(new SheetMapVO(8, [35], 'standSouth', false));
+				sheet.mapArray.push(new SheetMapVO(5, [8], 'standEast', 1));
+				sheet.mapArray.push(new SheetMapVO(6, [17], 'standWest', 1));
+				sheet.mapArray.push(new SheetMapVO(7, [26], 'standNorth', 1));
+				sheet.mapArray.push(new SheetMapVO(8, [35], 'standSouth', 1));
 			}
 			
 			sheet.play('standSouth');

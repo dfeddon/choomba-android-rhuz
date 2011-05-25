@@ -187,12 +187,28 @@ package com.choomba
 		}
 		
 		//this is main game function that is run at enterframe event
+		private var c:int=0;
 		protected function update(ev:Event):void 
 		{
 			//animate the objects
 			if (active)
+			{
+				if (vo.speedOffset > 0)
+				{
+					c++;
+					if (vo.speedOffset != c)
+						return;
+					else c = 0;
+				}
 				animateSprite();
-			else actor.removeEventListener(Event.ENTER_FRAME, update);
+			}
+			else
+			{
+				actor.removeEventListener(Event.ENTER_FRAME, update);
+				c=0;
+			}
+			
+			//if (vo.speedOffset > 0)
 		}
 		
 		//this function will animate all the objects
@@ -220,16 +236,22 @@ package com.choomba
 							ob.animCount = 0;
 						
 						// if animation doesn't repeat, stop
-						if (!vo.repeater) 
+						if (vo.repeater == 1) 
+						{
 							active = false;
+							vo.sheetComplete();
+						}
+						else if (vo.repeater > 1)
+							vo.repeater--;
 					}
 
 					//clear the current tile image
 					var rect:Rectangle = new Rectangle(ob.xt * ts, ob.yt * ts, ts, ts);
 					tilesBmp.bitmapData.fillRect (rect, 0x00000000);
 					
-					//change the image if time is right
-					ob.s = ob.anim[ob.animCount];
+					//change the image if time is right (unless last frame)
+					if(ob.animCount != ob.anim.length)
+						ob.s = ob.anim[ob.animCount];
 					
 					//drawTile (ob.baseSpr, ob.xt, ob.yt);
 					drawTile (ob.s, ob.xt, ob.yt);

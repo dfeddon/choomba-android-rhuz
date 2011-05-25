@@ -2,6 +2,7 @@ package com.choomba
 {
 	import com.choomba.Image;
 	import com.choomba.fx.CatherineWheel;
+	import com.choomba.fx.Firework;
 	import com.choomba.fx.MutualG;
 	import com.choomba.fx.Sparkler;
 	import com.choomba.utils.DateUtils;
@@ -133,7 +134,7 @@ package com.choomba
 			
 			var area:int;
 			var renderer:BitmapRenderer;
-			var magicType:String = 'wheel';
+			var magicType:String = 'firework';
 			
 			switch(e.currentTarget.name)
 			{
@@ -185,6 +186,22 @@ package com.choomba
 							Studio.currentLot.addChild( renderer );
 							
 							emitter.start( );
+							
+							break;
+						
+						case 'firework':							
+							emitter = new Firework();
+							
+							renderer = new BitmapRenderer( 
+								new Rectangle( p.x - 150, p.y - 150, 300, 300 ) );
+							//renderer.addFilter( new BlurFilter( 2, 2, 1 ) );
+							renderer.addFilter( new ColorMatrixFilter( [ 1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0.95,0 ] ) );
+							renderer.addEmitter( emitter );
+							Studio.currentLot.addChild( renderer );
+							
+							emitter.x = p.x;
+							emitter.y = p.y;
+							emitter.start();
 							
 							break;
 					}
