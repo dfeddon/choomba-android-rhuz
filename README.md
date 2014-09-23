@@ -1,4 +1,4 @@
 choomba-android-rhuz
 ====================
 
-Tower of Rhuz developed on the Choomba AS3 mobile-optimized engine.
+AS3 gaming framework developed on the Choomba AS3 mobile-optimized engine.
